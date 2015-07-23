@@ -25,8 +25,7 @@ import javax.persistence.EntityManager;
  * @author Herman
  * @since 22/07/2015
  */
-public class JPAQueryFactoryProvider
-        implements Provider<JPAQueryFactory> {
+public class JPAQueryFactoryProvider implements Provider<JPAQueryFactory> {
 
     @Inject
     private Provider<EntityManager> entityManagerProvider;
