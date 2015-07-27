@@ -13,20 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package models;
+package dtos;
 
-import java.util.List;
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.Getter;
 
 /**
  *
  * @author Herman
- * @since 22/07/2015
+ * @since 23/07/2015
  */
-@Value
-public class ResultadoPaginaDTO<T> {
+@Getter
+@JsonRootName(value = "resultado")
+public class ResultadoDTO {
 
     private final int codigo;
-    private final TipoRespuesta tipo;
-    private final List<T> valores;
+    private final String descripcion;
+    private final Object valor;
+
+    public ResultadoDTO(HttpCode httpCode, Object valor) {
+        this.codigo = httpCode.getCode();
+        this.descripcion = httpCode.name();
+        this.valor = valor;
+    }    
 }

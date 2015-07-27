@@ -24,6 +24,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
@@ -31,7 +32,8 @@ import lombok.EqualsAndHashCode;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = {"incidenciaId"})
+@ToString(callSuper = true, exclude = {"nota"})
 @Entity
 @Table(name = "nota")
 public class Nota extends ModeloBase implements Serializable {

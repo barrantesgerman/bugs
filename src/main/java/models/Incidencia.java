@@ -28,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
@@ -35,7 +36,8 @@ import lombok.EqualsAndHashCode;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = {"proyecto", "modulo", "categoria"})
+@ToString(callSuper = true, of = {"proyecto", "modulo", "categoria", "resumen"})
 @Entity
 @Table(name = "incidencia")
 public class Incidencia extends ModeloBase implements Serializable {
@@ -69,8 +71,7 @@ public class Incidencia extends ModeloBase implements Serializable {
     private String pasos;
     @Column(name = "informacion_adicional")
     private String informacionAdicional;
-    
-    
+
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
@@ -91,8 +92,7 @@ public class Incidencia extends ModeloBase implements Serializable {
     @Column(name = "fecha_cierre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCierre;
-    
-    
+
     @Column(name = "usuario_creacion")
     private String usuarioCreacion;
     @Column(name = "usuario_actualizacion")

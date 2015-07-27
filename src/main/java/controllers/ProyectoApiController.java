@@ -20,6 +20,7 @@ import dao.ProyectoDAO;
 import java.util.List;
 import javax.inject.Inject;
 import models.Proyecto;
+import dtos.Resultados;
 import ninja.Result;
 import ninja.Results;
 import ninja.params.PathParam;
@@ -35,42 +36,47 @@ public class ProyectoApiController {
     private ProyectoDAO proyectoDAO;
 
     public Result listar() {
+        
         List<Proyecto> proyectos = proyectoDAO.listar();
         if (!proyectos.isEmpty()) {
-            return Results.json().render(proyectos);
+            return Resultados.ok(proyectos);
         }
-        return Results.notFound().json();
+        return Resultados.notFound();
     }
 
     public Result buscar(@PathParam("id") Long id) {
+        
         Optional<Proyecto> proyecto = proyectoDAO.buscar(id);
         if (proyecto.isPresent()) {
-            return Results.json().render(proyecto.get());
+            return Resultados.ok(proyecto.get());
         }
-        return Results.notFound().json();
+        return Resultados.notFound();
     }
 
     public Result crear(Proyecto proyecto) {
+        
         Optional<Proyecto> resultado = proyectoDAO.crear(proyecto);
         if (resultado.isPresent()) {
-            return Results.json().render(resultado.get());
+            return Resultados.created(resultado.get());
         }
-        return Results.notFound().json();
+        return Resultados.notFound();
     }
 
     public Result editar(@PathParam("id") Long id, Proyecto proyecto) {
+        
         boolean resultado = proyectoDAO.editar(id, proyecto);
         if (resultado) {
-            return Results.json();
+            return Resultados.ok();
         }
-        return Results.notFound().json();
+        return Resultados.notFound();
     }
 
     public Result eliminar(@PathParam("id") Long id) {
+        
         boolean resultado = proyectoDAO.eliminar(id);
         if (resultado) {
-            return Results.json();
+            return Resultados.ok();
         }
-        return Results.notFound().json();
+        return Resultados.notFound();
     }
 }

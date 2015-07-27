@@ -24,6 +24,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
@@ -31,7 +32,8 @@ import lombok.EqualsAndHashCode;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = {"incidenciaId"})
+@ToString(callSuper = true, exclude = {"contenido"})
 @Entity
 @Table(name = "archivo")
 public class Archivo extends ModeloBase implements Serializable {

@@ -13,15 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package models;
+package dtos;
 
 /**
  *
  * @author Herman
- * @since 22/07/2015
+ * @since 23/07/2015
  */
-public enum TipoRespuesta {
+public enum HttpCode {
 
-    OK,
-    ERROR;
+    OK(200),
+    CREATED(201),
+    ACCEPTED(202),
+    NO_CONTENT(204),
+    MOVED_PERMANENTLY(301),
+    SEE_OTHER(303),
+    TEMPORARY_REDIRECT(307),
+    BAD_REQUEST(400),
+    UNAUTHORIZED(401),
+    FORBIDDEN(403),
+    NOT_FOUND(404),
+    INTERNAL_SERVER_ERROR(500),
+    NOT_IMPLEMENTED(501);
+
+    private final int code;
+
+    private HttpCode(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }

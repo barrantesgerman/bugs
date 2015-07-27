@@ -16,10 +16,10 @@
 package controllers;
 
 import com.google.common.base.Optional;
-import dao.CategoriaDAO;
+import dao.ModuloDAO;
 import java.util.List;
 import javax.inject.Inject;
-import models.Categoria;
+import models.Modulo;
 import dtos.Resultados;
 import ninja.Result;
 import ninja.params.PathParam;
@@ -29,36 +29,36 @@ import ninja.params.PathParam;
  * @author Herman
  * @since 22/07/2015
  */
-public class CategoriaApiController {
+public class ModuloApiController {
 
     @Inject
-    private CategoriaDAO categoriaDAO;
+    private ModuloDAO moduloDAO;
 
     public Result listar(@PathParam("proyectoId") Long proyectoId) {
 
-        List<Categoria> categorias = categoriaDAO.listar(proyectoId);
-        if (!categorias.isEmpty()) {
-            return Resultados.ok(categorias);
+        List<Modulo> modulos = moduloDAO.listar(proyectoId);
+        if (!modulos.isEmpty()) {
+            return Resultados.ok(modulos);
         }
         return Resultados.notFound();
     }
 
     public Result buscar(
             @PathParam("proyectoId") Long proyectoId,
-            @PathParam("categoriaId") Long categoriaId) {
+            @PathParam("moduloId") Long moduloId) {
 
-        Optional<Categoria> categoria = categoriaDAO.buscar(proyectoId, categoriaId);
-        if (categoria.isPresent()) {
-            return Resultados.ok(categoria.get());
+        Optional<Modulo> modulo = moduloDAO.buscar(proyectoId, moduloId);
+        if (modulo.isPresent()) {
+            return Resultados.ok(modulo.get());
         }
         return Resultados.notFound();
     }
 
     public Result crear(
             @PathParam("proyectoId") Long proyectoId,
-            Categoria categoria) {
+            Modulo modulo) {
 
-        Optional<Categoria> resultado = categoriaDAO.crear(proyectoId, categoria);
+        Optional<Modulo> resultado = moduloDAO.crear(proyectoId, modulo);
         if (resultado.isPresent()) {
             return Resultados.created(resultado.get());
         }
@@ -67,10 +67,10 @@ public class CategoriaApiController {
 
     public Result editar(
             @PathParam("proyectoId") Long proyectoId,
-            @PathParam("categoriaId") Long categoriaId,
-            Categoria categoria) {
+            @PathParam("moduloId") Long moduloId,
+            Modulo modulo) {
 
-        boolean resultado = categoriaDAO.editar(proyectoId, categoriaId, categoria);
+        boolean resultado = moduloDAO.editar(proyectoId, moduloId, modulo);
         if (resultado) {
             return Resultados.ok();
         }
@@ -79,9 +79,9 @@ public class CategoriaApiController {
 
     public Result eliminar(
             @PathParam("proyectoId") Long proyectoId,
-            @PathParam("categoriaId") Long categoriaId) {
+            @PathParam("moduloId") Long moduloId) {
 
-        boolean resultado = categoriaDAO.eliminar(proyectoId, categoriaId);
+        boolean resultado = moduloDAO.eliminar(proyectoId, moduloId);
         if (resultado) {
             return Resultados.ok();
         }

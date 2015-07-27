@@ -25,6 +25,7 @@ public class Module extends AbstractModule {
     @Override
     protected void configure() {
         bind(JPAQueryFactory.class).toProvider(JPAQueryFactoryProvider.class);
+        bind(DozerMapper.class).asEagerSingleton();
     }
 
 }

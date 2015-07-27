@@ -13,33 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package models;
+package dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Value;
 
 /**
  *
  * @author Herman
- * @since 22/07/2015
+ * @since 24/07/2015
  */
-@Data
-@EqualsAndHashCode(callSuper = true, exclude = {"proyectoId"})
-@ToString(callSuper = true)
-@Entity
-@Table(name = "modulo")
-public class Modulo extends ModeloBase implements Serializable {
+@Value
+public class OrdenDTO {
 
-    @JsonIgnore
-    @Column(name = "proyecto_id")
-    private long proyectoId;
-    @Column(name = "nombre")
-    private String nombre;
+    enum Direccion {
 
+        ASC,
+        DESC;
+    }
+    private final String campo;
+    private final Direccion direccion;
 }

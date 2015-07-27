@@ -23,6 +23,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  *
@@ -30,7 +31,8 @@ import lombok.EqualsAndHashCode;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of = {"nombre"})
+@ToString(callSuper = true, exclude = {"descripcion"})
 @Entity
 @Table(name = "proyecto")
 public class Proyecto extends ModeloBase implements Serializable {

@@ -23,6 +23,7 @@ import com.google.inject.Inject;
 import controllers.ApplicationController;
 import controllers.CategoriaApiController;
 import controllers.LoginLogoutController;
+import controllers.ModuloApiController;
 import controllers.ProyectoApiController;
 
 public class Routes implements ApplicationRoutes {
@@ -41,11 +42,6 @@ public class Routes implements ApplicationRoutes {
     @Override
     public void init(Router router) {
 
-        // puts test data into db:
-//        if (!ninjaProperties.isProd()) {
-//            router.GET().route("/setup").with(ApplicationController.class, "setup");
-//        }
-
         ///////////////////////////////////////////////////////////////////////
         // Proyecto API Controller
         ///////////////////////////////////////////////////////////////////////
@@ -54,20 +50,32 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/proyectos").with(ProyectoApiController.class, "crear");
         router.PUT().route("/api/proyectos/{id: [0-9]+}").with(ProyectoApiController.class, "editar");
         router.DELETE().route("/api/proyectos/{id: [0-9]+}").with(ProyectoApiController.class, "eliminar");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Categoría API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/proyectos/{proyectoId: [0-9]+}/categorias").with(CategoriaApiController.class, "listar");
         router.GET().route("/api/proyectos/{proyectoId: [0-9]+}/categorias/{categoriaId: [0-9]+}").with(CategoriaApiController.class, "buscar");
-        
+        router.POST().route("/api/proyectos/{proyectoId: [0-9]+}/categorias").with(CategoriaApiController.class, "crear");
+        router.PUT().route("/api/proyectos/{proyectoId: [0-9]+}/categorias/{categoriaId: [0-9]+}").with(CategoriaApiController.class, "editar");
+        router.DELETE().route("/api/proyectos/{proyectoId: [0-9]+}/categorias/{categoriaId: [0-9]+}").with(CategoriaApiController.class, "eliminar");
+
+        ///////////////////////////////////////////////////////////////////////
+        // Modulo API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/proyectos/{proyectoId: [0-9]+}/modulos").with(ModuloApiController.class, "listar");
+        router.GET().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "buscar");
+        router.POST().route("/api/proyectos/{proyectoId: [0-9]+}/modulos").with(ModuloApiController.class, "crear");
+        router.PUT().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "editar");
+        router.DELETE().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "eliminar");
+
         ///////////////////////////////////////////////////////////////////////
         // Login / Logout
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/login").with(LoginLogoutController.class, "login");
         router.POST().route("/login").with(LoginLogoutController.class, "loginPost");
         router.GET().route("/logout").with(LoginLogoutController.class, "logout");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Assets (fotos/javascript/css)
         ///////////////////////////////////////////////////////////////////////    
