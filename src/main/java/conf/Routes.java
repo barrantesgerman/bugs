@@ -24,6 +24,7 @@ import controllers.ApplicationController;
 import controllers.CategoriaApiController;
 import controllers.LoginLogoutController;
 import controllers.ModuloApiController;
+import controllers.NotaApiController;
 import controllers.ProyectoApiController;
 
 public class Routes implements ApplicationRoutes {
@@ -68,6 +69,15 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/proyectos/{proyectoId: [0-9]+}/modulos").with(ModuloApiController.class, "crear");
         router.PUT().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "editar");
         router.DELETE().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "eliminar");
+        
+        ///////////////////////////////////////////////////////////////////////
+        // Nota API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "listar");
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "buscar");
+        router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "crear");
+        router.PUT().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "editar");
+        router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "eliminar");
 
         ///////////////////////////////////////////////////////////////////////
         // Login / Logout
