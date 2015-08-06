@@ -18,6 +18,7 @@ package dao;
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.ArchivoLiteDTO;
 import java.util.ArrayList;
@@ -45,27 +46,19 @@ public class ArchivoDAO {
     public List<ArchivoLiteDTO> listar(long incidenciaId) {
         QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
-        List<Tuple> tuplas = query
+        return query
                 .select(
-                        qa.id,
-                        qa.usuario,
-                        qa.nombre,
-                        qa.mimeType)
+                        Projections.constructor(
+                                ArchivoLiteDTO.class,
+                                qa.id,
+                                qa.usuario,
+                                qa.nombre,
+                                qa.mimeType))
                 .from(qa)
                 .where(
                         qa.incidenciaId.eq(incidenciaId),
                         qa.activo.isTrue())
                 .fetch();
-        List<ArchivoLiteDTO> archivos = new ArrayList<ArchivoLiteDTO>(tuplas.size());
-        for (Tuple tupla : tuplas) {
-            archivos.add(
-                    new ArchivoLiteDTO(
-                            tupla.get(qa.id),
-                            tupla.get(qa.usuario),
-                            tupla.get(qa.nombre),
-                            tupla.get(qa.mimeType)));
-        }
-        return archivos;
     }
 
     @UnitOfWork
