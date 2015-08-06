@@ -47,6 +47,7 @@ public class CategoriaDAO {
                 .where(
                         qc.proyectoId.eq(proyectoId),
                         qc.activo.isTrue())
+                .orderBy(qc.descripcion.asc())
                 .fetch();
     }
 

@@ -27,7 +27,7 @@ import lombok.Value;
 @Value
 @EqualsAndHashCode(of = {"id"})
 @JsonRootName(value = "archivo")
-public class ArchivoLiteDTO {
+public class ArchivoDTO {
 
     private final long id;
     private final String usuario;

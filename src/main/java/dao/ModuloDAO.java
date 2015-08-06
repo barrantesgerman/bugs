@@ -47,6 +47,7 @@ public class ModuloDAO {
                 .where(
                         qm.proyectoId.eq(proyectoId),
                         qm.activo.isTrue())
+                .orderBy(qm.nombre.asc())
                 .fetch();
     }
 

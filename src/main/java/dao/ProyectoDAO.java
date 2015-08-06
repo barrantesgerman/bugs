@@ -46,6 +46,7 @@ public class ProyectoDAO {
                 .selectFrom(qp)
                 .where(
                         qp.activo.isTrue())
+                .orderBy(qp.nombre.asc())
                 .fetch();
     }
 

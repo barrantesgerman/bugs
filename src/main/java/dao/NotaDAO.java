@@ -48,6 +48,7 @@ public class NotaDAO {
                 .where(
                         qn.incidenciaId.eq(incidenciaId),
                         qn.activo.isTrue())
+                .orderBy(qn.fecha.desc())
                 .fetch();
     }
 

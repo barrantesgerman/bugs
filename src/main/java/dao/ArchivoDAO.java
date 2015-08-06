@@ -19,7 +19,7 @@ import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import dtos.ArchivoLiteDTO;
+import dtos.ArchivoDTO;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -41,13 +41,13 @@ public class ArchivoDAO {
     private Provider<EntityManager> entitiyManagerProvider;
 
     @UnitOfWork
-    public List<ArchivoLiteDTO> listar(long incidenciaId) {
+    public List<ArchivoDTO> listar(long incidenciaId) {
         QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
                 .select(
                         Projections.constructor(
-                                ArchivoLiteDTO.class,
+                                ArchivoDTO.class,
                                 qa.id,
                                 qa.usuario,
                                 qa.nombre,
@@ -73,12 +73,12 @@ public class ArchivoDAO {
     }
 
     @Transactional
-    public Optional<Archivo> crear(long incidenciaId, Archivo nota) {
+    public Optional<Archivo> crear(long incidenciaId, Archivo archivo) {
         EntityManager em = entitiyManagerProvider.get();
-        nota.setIncidenciaId(incidenciaId);
-        nota.setActivo(true);
-        em.persist(nota);
-        return Optional.of(nota);
+        archivo.setIncidenciaId(incidenciaId);
+        archivo.setActivo(true);
+        em.persist(archivo);
+        return Optional.of(archivo);
     }
 
     @Transactional

@@ -16,9 +16,12 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,6 +44,9 @@ public class Historico extends ModeloBase implements Serializable {
     private String usuario;
     @Column(name = "campo")
     private String campo;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
     @Column(name = "antes")
     private String antes;
     @Column(name = "ahora")
