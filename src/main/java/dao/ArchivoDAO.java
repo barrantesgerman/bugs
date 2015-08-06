@@ -17,11 +17,9 @@ package dao;
 
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.ArchivoLiteDTO;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;

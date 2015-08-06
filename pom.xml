@@ -55,7 +55,7 @@
         <ninja.version>5.1.4</ninja.version>
         <jetty.version>9.2.10.v20150310</jetty.version>
         <lombok.version>1.16.4</lombok.version>
-        <querydsl.version>4.0.2</querydsl.version>
+        <querydsl.version>4.0.3</querydsl.version>
         <dozer.version>5.5.1</dozer.version>
     </properties>
     
