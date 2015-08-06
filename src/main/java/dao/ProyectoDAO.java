@@ -45,7 +45,7 @@ public class ProyectoDAO {
         return query
                 .selectFrom(qp)
                 .where(
-                        qp.activo.eq(true))
+                        qp.activo.isTrue())
                 .fetch();
     }
 
@@ -57,7 +57,7 @@ public class ProyectoDAO {
                 .selectFrom(qp)
                 .where(
                         qp.id.eq(id),
-                        qp.activo.eq(true))
+                        qp.activo.isTrue())
                 .fetchOne());
     }
 
@@ -79,7 +79,8 @@ public class ProyectoDAO {
                 .set(qp.descripcion, proyecto.getDescripcion())
                 .set(qp.estado, proyecto.getEstado())
                 .where(
-                        qp.id.eq(id))
+                        qp.id.eq(id),
+                        qp.activo.isTrue())
                 .execute() > 0L;
     }
 
@@ -91,7 +92,8 @@ public class ProyectoDAO {
                 .update(qp)
                 .set(qp.activo, false)
                 .where(
-                        qp.id.eq(id))
+                        qp.id.eq(id),
+                        qp.activo.isTrue())
                 .execute() > 0L;
     }
 }

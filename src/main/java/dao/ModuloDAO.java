@@ -46,7 +46,7 @@ public class ModuloDAO {
                 .selectFrom(qm)
                 .where(
                         qm.proyectoId.eq(proyectoId),
-                        qm.activo.eq(true))
+                        qm.activo.isTrue())
                 .fetch();
     }
 
@@ -59,7 +59,7 @@ public class ModuloDAO {
                 .where(
                         qm.id.eq(moduloId),
                         qm.proyectoId.eq(proyectoId),
-                        qm.activo.eq(true))
+                        qm.activo.isTrue())
                 .fetchOne());
     }
 
@@ -81,7 +81,8 @@ public class ModuloDAO {
                 .set(qm.nombre, modulo.getNombre())
                 .where(
                         qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId))
+                        qm.proyectoId.eq(proyectoId),
+                        qm.activo.isTrue())
                 .execute() > 0L;
     }
 
@@ -94,7 +95,8 @@ public class ModuloDAO {
                 .set(qm.activo, false)
                 .where(
                         qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId))
+                        qm.proyectoId.eq(proyectoId),
+                        qm.activo.isTrue())
                 .execute() > 0L;
     }
 }

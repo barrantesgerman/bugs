@@ -18,12 +18,13 @@ package dao;
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
-import models.Categoria;
-import models.QCategoria;
+import models.Nota;
+import models.QNota;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -31,7 +32,7 @@ import ninja.jpa.UnitOfWork;
  * @author Herman
  * @since 22/07/2015
  */
-public class CategoriaDAO {
+public class NotaDAO {
 
     @Inject
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
@@ -39,64 +40,67 @@ public class CategoriaDAO {
     private Provider<EntityManager> entitiyManagerProvider;
 
     @UnitOfWork
-    public List<Categoria> listar(long proyectoId) {
-        QCategoria qc = QCategoria.categoria;
+    public List<Nota> listar(long incidenciaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .selectFrom(qc)
+                .selectFrom(qn)
                 .where(
-                        qc.proyectoId.eq(proyectoId),
-                        qc.activo.isTrue())
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .fetch();
     }
 
     @UnitOfWork
-    public Optional<Categoria> buscar(long proyectoId, long categoriaId) {
-        QCategoria qc = QCategoria.categoria;
+    public Optional<Nota> buscar(long incidenciaId, long notaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return Optional.fromNullable(query
-                .selectFrom(qc)
+                .selectFrom(qn)
                 .where(
-                        qc.id.eq(categoriaId),
-                        qc.proyectoId.eq(proyectoId),
-                        qc.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .fetchOne());
     }
 
     @Transactional
-    public Optional<Categoria> crear(long proyectoId, Categoria categoria) {
+    public Optional<Nota> crear(long incidenciaId, Nota nota) {
         EntityManager em = entitiyManagerProvider.get();
-        categoria.setProyectoId(proyectoId);
-        categoria.setActivo(true);
-        em.persist(categoria);
-        return Optional.of(categoria);
+        nota.setIncidenciaId(incidenciaId);
+        nota.setFecha(new Date());
+        nota.setActivo(true);
+        em.persist(nota);
+        return Optional.of(nota);
     }
 
     @Transactional
-    public boolean editar(long proyectoId, long categoriaId, Categoria categoria) {
-        QCategoria qc = QCategoria.categoria;
+    public boolean editar(long incidenciaId, long notaId, Nota nota) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qc)
-                .set(qc.descripcion, categoria.getDescripcion())
+                .update(qn)
+                .set(qn.nota, nota.getNota())
+                .set(qn.usuario, nota.getUsuario())
+                .set(qn.fecha, nota.getFecha())
                 .where(
-                        qc.id.eq(categoriaId),
-                        qc.proyectoId.eq(proyectoId),
-                        qc.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .execute() > 0L;
     }
 
     @Transactional
-    public boolean eliminar(long proyectoId, long categoriaId) {
-        QCategoria qc = QCategoria.categoria;
+    public boolean eliminar(long incidenciaId, long notaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qc)
-                .set(qc.activo, false)
+                .update(qn)
+                .set(qn.activo, false)
                 .where(
-                        qc.id.eq(categoriaId),
-                        qc.proyectoId.eq(proyectoId),
-                        qc.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .execute() > 0L;
     }
 }
