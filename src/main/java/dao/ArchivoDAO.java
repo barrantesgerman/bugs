@@ -20,6 +20,7 @@ import com.google.inject.persist.Transactional;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.ArchivoDTO;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -56,6 +57,7 @@ public class ArchivoDAO {
                 .where(
                         qa.incidenciaId.eq(incidenciaId),
                         qa.activo.isTrue())
+                .orderBy(qa.fecha.desc())
                 .fetch();
     }
 
@@ -77,6 +79,7 @@ public class ArchivoDAO {
         EntityManager em = entitiyManagerProvider.get();
         archivo.setIncidenciaId(incidenciaId);
         archivo.setActivo(true);
+        archivo.setFecha(new Date());
         em.persist(archivo);
         return Optional.of(archivo);
     }
