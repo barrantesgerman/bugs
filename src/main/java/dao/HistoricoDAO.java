@@ -48,7 +48,7 @@ public class HistoricoDAO {
                 .where(
                         qh.incidenciaId.eq(incidenciaId),
                         qh.activo.isTrue())
-                .orderBy(qh.fecha.desc())
+                .orderBy(qh.fecha.asc())
                 .fetch();
     }
 

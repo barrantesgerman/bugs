@@ -16,6 +16,7 @@
 package dtos;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
@@ -33,5 +34,6 @@ public class ArchivoDTO {
     private final String usuario;
     private final String nombre;
     private final String mimeType;
+    private final Date fecha;
 
 }

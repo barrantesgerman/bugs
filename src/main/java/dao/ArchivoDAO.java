@@ -52,12 +52,13 @@ public class ArchivoDAO {
                                 qa.id,
                                 qa.usuario,
                                 qa.nombre,
-                                qa.mimeType))
+                                qa.mimeType,
+                                qa.fecha))
                 .from(qa)
                 .where(
                         qa.incidenciaId.eq(incidenciaId),
                         qa.activo.isTrue())
-                .orderBy(qa.fecha.desc())
+                .orderBy(qa.fecha.asc())
                 .fetch();
     }
 
