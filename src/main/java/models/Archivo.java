@@ -16,12 +16,15 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -46,6 +49,9 @@ public class Archivo extends ModeloBase implements Serializable {
     private String nombre;
     @Column(name = "mimeType")
     private String mimeType;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "contenido")

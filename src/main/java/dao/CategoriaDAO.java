@@ -46,7 +46,8 @@ public class CategoriaDAO {
                 .selectFrom(qc)
                 .where(
                         qc.proyectoId.eq(proyectoId),
-                        qc.activo.eq(true))
+                        qc.activo.isTrue())
+                .orderBy(qc.descripcion.asc())
                 .fetch();
     }
 
@@ -59,7 +60,7 @@ public class CategoriaDAO {
                 .where(
                         qc.id.eq(categoriaId),
                         qc.proyectoId.eq(proyectoId),
-                        qc.activo.eq(true))
+                        qc.activo.isTrue())
                 .fetchOne());
     }
 
@@ -81,7 +82,8 @@ public class CategoriaDAO {
                 .set(qc.descripcion, categoria.getDescripcion())
                 .where(
                         qc.id.eq(categoriaId),
-                        qc.proyectoId.eq(proyectoId))
+                        qc.proyectoId.eq(proyectoId),
+                        qc.activo.isTrue())
                 .execute() > 0L;
     }
 
@@ -94,7 +96,8 @@ public class CategoriaDAO {
                 .set(qc.activo, false)
                 .where(
                         qc.id.eq(categoriaId),
-                        qc.proyectoId.eq(proyectoId))
+                        qc.proyectoId.eq(proyectoId),
+                        qc.activo.isTrue())
                 .execute() > 0L;
     }
 }

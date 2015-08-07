@@ -17,21 +17,24 @@ package dao;
 
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import dtos.ArchivoDTO;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
-import models.Modulo;
-import models.QModulo;
+import models.Archivo;
+import models.QArchivo;
 import ninja.jpa.UnitOfWork;
 
 /**
  *
  * @author Herman
- * @since 24/07/2015
+ * @since 22/07/2015
  */
-public class ModuloDAO {
+public class ArchivoDAO {
 
     @Inject
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
@@ -39,65 +42,59 @@ public class ModuloDAO {
     private Provider<EntityManager> entitiyManagerProvider;
 
     @UnitOfWork
-    public List<Modulo> listar(long proyectoId) {
-        QModulo qm = QModulo.modulo;
+    public List<ArchivoDTO> listar(long incidenciaId) {
+        QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .selectFrom(qm)
+                .select(
+                        Projections.constructor(
+                                ArchivoDTO.class,
+                                qa.id,
+                                qa.usuario,
+                                qa.nombre,
+                                qa.mimeType))
+                .from(qa)
                 .where(
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
-                .orderBy(qm.nombre.asc())
+                        qa.incidenciaId.eq(incidenciaId),
+                        qa.activo.isTrue())
+                .orderBy(qa.fecha.desc())
                 .fetch();
     }
 
     @UnitOfWork
-    public Optional<Modulo> buscar(long proyectoId, long moduloId) {
-        QModulo qm = QModulo.modulo;
+    public Optional<Archivo> buscar(long incidenciaId, long archivoId) {
+        QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return Optional.fromNullable(query
-                .selectFrom(qm)
+                .selectFrom(qa)
                 .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
+                        qa.id.eq(archivoId),
+                        qa.incidenciaId.eq(incidenciaId),
+                        qa.activo.isTrue())
                 .fetchOne());
     }
 
     @Transactional
-    public Optional<Modulo> crear(long proyectoId, Modulo modulo) {
+    public Optional<Archivo> crear(long incidenciaId, Archivo archivo) {
         EntityManager em = entitiyManagerProvider.get();
-        modulo.setProyectoId(proyectoId);
-        modulo.setActivo(true);
-        em.persist(modulo);
-        return Optional.of(modulo);
+        archivo.setIncidenciaId(incidenciaId);
+        archivo.setActivo(true);
+        archivo.setFecha(new Date());
+        em.persist(archivo);
+        return Optional.of(archivo);
     }
 
     @Transactional
-    public boolean editar(long proyectoId, long moduloId, Modulo modulo) {
-        QModulo qm = QModulo.modulo;
+    public boolean eliminar(long incidenciaId, long archivoId) {
+        QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qm)
-                .set(qm.nombre, modulo.getNombre())
+                .update(qa)
+                .set(qa.activo, false)
                 .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
-                .execute() > 0L;
-    }
-
-    @Transactional
-    public boolean eliminar(long proyectoId, long moduloId) {
-        QModulo qm = QModulo.modulo;
-        JPAQueryFactory query = jpaQueryFactoryProvider.get();
-        return query
-                .update(qm)
-                .set(qm.activo, false)
-                .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
+                        qa.id.eq(archivoId),
+                        qa.incidenciaId.eq(incidenciaId),
+                        qa.activo.isTrue())
                 .execute() > 0L;
     }
 }

@@ -18,20 +18,21 @@ package dao;
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
-import models.Modulo;
-import models.QModulo;
+import models.Nota;
+import models.QNota;
 import ninja.jpa.UnitOfWork;
 
 /**
  *
  * @author Herman
- * @since 24/07/2015
+ * @since 22/07/2015
  */
-public class ModuloDAO {
+public class NotaDAO {
 
     @Inject
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
@@ -39,65 +40,68 @@ public class ModuloDAO {
     private Provider<EntityManager> entitiyManagerProvider;
 
     @UnitOfWork
-    public List<Modulo> listar(long proyectoId) {
-        QModulo qm = QModulo.modulo;
+    public List<Nota> listar(long incidenciaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .selectFrom(qm)
+                .selectFrom(qn)
                 .where(
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
-                .orderBy(qm.nombre.asc())
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
+                .orderBy(qn.fecha.desc())
                 .fetch();
     }
 
     @UnitOfWork
-    public Optional<Modulo> buscar(long proyectoId, long moduloId) {
-        QModulo qm = QModulo.modulo;
+    public Optional<Nota> buscar(long incidenciaId, long notaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return Optional.fromNullable(query
-                .selectFrom(qm)
+                .selectFrom(qn)
                 .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .fetchOne());
     }
 
     @Transactional
-    public Optional<Modulo> crear(long proyectoId, Modulo modulo) {
+    public Optional<Nota> crear(long incidenciaId, Nota nota) {
         EntityManager em = entitiyManagerProvider.get();
-        modulo.setProyectoId(proyectoId);
-        modulo.setActivo(true);
-        em.persist(modulo);
-        return Optional.of(modulo);
+        nota.setIncidenciaId(incidenciaId);
+        nota.setFecha(new Date());
+        nota.setActivo(true);
+        em.persist(nota);
+        return Optional.of(nota);
     }
 
     @Transactional
-    public boolean editar(long proyectoId, long moduloId, Modulo modulo) {
-        QModulo qm = QModulo.modulo;
+    public boolean editar(long incidenciaId, long notaId, Nota nota) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qm)
-                .set(qm.nombre, modulo.getNombre())
+                .update(qn)
+                .set(qn.nota, nota.getNota())
+                .set(qn.usuario, nota.getUsuario())
+                .set(qn.fecha, nota.getFecha())
                 .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .execute() > 0L;
     }
 
     @Transactional
-    public boolean eliminar(long proyectoId, long moduloId) {
-        QModulo qm = QModulo.modulo;
+    public boolean eliminar(long incidenciaId, long notaId) {
+        QNota qn = QNota.nota1;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qm)
-                .set(qm.activo, false)
+                .update(qn)
+                .set(qn.activo, false)
                 .where(
-                        qm.id.eq(moduloId),
-                        qm.proyectoId.eq(proyectoId),
-                        qm.activo.isTrue())
+                        qn.id.eq(notaId),
+                        qn.incidenciaId.eq(incidenciaId),
+                        qn.activo.isTrue())
                 .execute() > 0L;
     }
 }
