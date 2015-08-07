@@ -35,5 +35,5 @@ public class ResultadoDTO {
         this.codigo = httpCode.getCode();
         this.descripcion = httpCode.name();
         this.valor = valor;
-    }    
+    }
 }

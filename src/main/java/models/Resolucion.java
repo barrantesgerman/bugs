@@ -24,6 +24,7 @@ public enum Resolucion {
 
     ABIERTA,
     CORREGIDA,
+    CORREGIDA_PARCIALMENTE,
     REABIERTA,
     NO_REPRODUCIBLE,
     NO_ES_CORREGIBLE,

@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import models.Proyecto;
 import dtos.Resultados;
 import ninja.Result;
-import ninja.Results;
 import ninja.params.PathParam;
 
 /**
@@ -36,7 +35,7 @@ public class ProyectoApiController {
     private ProyectoDAO proyectoDAO;
 
     public Result listar() {
-        
+
         List<Proyecto> proyectos = proyectoDAO.listar();
         if (!proyectos.isEmpty()) {
             return Resultados.ok(proyectos);
@@ -45,7 +44,7 @@ public class ProyectoApiController {
     }
 
     public Result buscar(@PathParam("id") Long id) {
-        
+
         Optional<Proyecto> proyecto = proyectoDAO.buscar(id);
         if (proyecto.isPresent()) {
             return Resultados.ok(proyecto.get());
@@ -54,7 +53,7 @@ public class ProyectoApiController {
     }
 
     public Result crear(Proyecto proyecto) {
-        
+
         Optional<Proyecto> resultado = proyectoDAO.crear(proyecto);
         if (resultado.isPresent()) {
             return Resultados.created(resultado.get());
@@ -63,7 +62,7 @@ public class ProyectoApiController {
     }
 
     public Result editar(@PathParam("id") Long id, Proyecto proyecto) {
-        
+
         boolean resultado = proyectoDAO.editar(id, proyecto);
         if (resultado) {
             return Resultados.ok();
@@ -72,7 +71,7 @@ public class ProyectoApiController {
     }
 
     public Result eliminar(@PathParam("id") Long id) {
-        
+
         boolean resultado = proyectoDAO.eliminar(id);
         if (resultado) {
             return Resultados.ok();
