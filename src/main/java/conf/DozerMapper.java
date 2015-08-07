@@ -34,7 +34,7 @@ public class DozerMapper {
     }
 
     public <T> List<T> map(List lista, Class<T> clazz) {
-        List<T> resultados = new ArrayList<T>(lista.size());
+        List<T> resultados = new ArrayList<>(lista.size());
         for (Object objeto : lista) {
             T resultado = map(objeto, clazz);
             resultados.add(resultado);
