@@ -21,9 +21,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,21 +34,18 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"proyecto", "modulo", "categoria"})
-@ToString(callSuper = true, of = {"proyecto", "modulo", "categoria", "resumen"})
+@EqualsAndHashCode(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId"})
+@ToString(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId", "resumen"})
 @Entity
 @Table(name = "incidencia")
 public class Incidencia extends ModeloBase implements Serializable {
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "proyecto_id")
-    private Proyecto proyecto;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "modulo_id")
-    private Modulo modulo;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    @Column(name = "proyecto_id")
+    private long proyectoId;
+    @Column(name = "modulo_id")
+    private long moduloId;
+    @Column(name = "categoria_id")
+    private long categoriaId;
     @Column(name = "estado")
     @Enumerated(EnumType.STRING)
     private EstadoIncidencia estado;

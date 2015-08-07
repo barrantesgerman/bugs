@@ -15,6 +15,7 @@
  */
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -41,6 +42,7 @@ import lombok.ToString;
 @Table(name = "archivo")
 public class Archivo extends ModeloBase implements Serializable {
 
+    @JsonIgnore
     @Column(name = "incidencia_id")
     private long incidenciaId;
     @Column(name = "usuario")

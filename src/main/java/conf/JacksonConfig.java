@@ -17,8 +17,6 @@ package conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import ninja.lifecycle.Start;
@@ -33,14 +31,13 @@ public class JacksonConfig {
 
     @Inject
     private ObjectMapper objectMapper;
-    @Inject 
+    @Inject
     private XmlMapper xmlMapper;
 
     @Start(order = 90)
     public void configureObjectMapper() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", new Locale("es", "CR"));
-        objectMapper.setDateFormat(sdf);
-        xmlMapper.setDateFormat(sdf);
+        objectMapper.setDateFormat(Constantes.SIMPLE_DATE_FORMAT);
+        xmlMapper.setDateFormat(Constantes.SIMPLE_DATE_FORMAT);
     }
 
 }
