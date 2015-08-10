@@ -26,8 +26,8 @@ import ninja.params.WithArgumentExtractor;
  *
  * @author Herman Barrantes
  */
-@WithArgumentExtractor(FiltroParamExtractor.class)
+@WithArgumentExtractor(FiltroIncidenciaExtractor.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
-public @interface FiltroParam {
+public @interface FiltroIncidencia {
 }

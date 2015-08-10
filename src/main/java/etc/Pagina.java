@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dtos;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.google.common.base.Optional;
-import lombok.Data;
+package etc;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import ninja.params.WithArgumentExtractor;
 
 /**
  *
- * @author Herman
- * @since 24/07/2015
+ * @author Herman Barrantes
+ * @since 10/08/2015
  */
-@Data
-@JsonRootName(value = "pagina")
-public class PaginaDTO {
-
-    private Optional<Long> numero;
-    private Optional<Long> tamano;
-//    private Optional<Integer> total;
-//    private boolean primera;
-//    private boolean ultima;
-//    private List<OrdenDTO> orden;
-
+@WithArgumentExtractor(PaginaExtractor.class)
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.PARAMETER})
+public @interface Pagina {
 }

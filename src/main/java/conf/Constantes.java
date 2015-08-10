@@ -23,6 +23,9 @@ import java.util.Locale;
  * @author Herman Barrantes
  */
 public interface Constantes {
+    
+    Long TAMANO_PAGINA = 10L;
+    Long NUMERO_PAGINA = 0L;
 
     String PATRON_FECHA = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     Locale LOCALE_CR = new Locale("es", "CR");

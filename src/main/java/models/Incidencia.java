@@ -73,6 +73,7 @@ public class Incidencia extends ModeloBase implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecha_actualizacion")
     private Date fechaActualizacion;
+    @Column(name = "fecha_asignacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAsignacion;
     @Column(name = "fecha_atension")

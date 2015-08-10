@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import models.EstadoIncidencia;
 import models.Prioridad;
 import models.Reproducibilidad;
@@ -34,21 +33,17 @@ import models.Resolucion;
  */
 @Data
 @EqualsAndHashCode(of = {"proyectoId", "moduloId", "categoriaId"})
-@ToString(of = {"proyectoId", "moduloId", "categoriaId", "resumen"})
 @JsonRootName(value = "filtro")
-public class FiltroDTO implements Serializable {
+public class FiltroIncidenciaDTO implements Serializable {
 
     private Optional<String> usuario;
-    private Optional<Integer> proyectoId;
-    private Optional<Integer> moduloId;
-    private Optional<Integer> categoriaId;
+    private Optional<Long> proyectoId;
+    private Optional<Long> moduloId;
+    private Optional<Long> categoriaId;
     private Set<EstadoIncidencia> estado;
     private Set<Prioridad> prioridad;
     private Set<Reproducibilidad> reproducibilidad;
     private Set<Resolucion> resolucion;
     private Optional<String> resumen;
-    private Optional<Integer> tamano;
-    private Optional<Integer> pagina;
-    private Optional<Integer> total;
 
 }
