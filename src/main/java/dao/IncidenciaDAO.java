@@ -20,7 +20,6 @@ import com.google.inject.persist.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import conf.Constantes;
 import dtos.FiltroIncidenciaDTO;
 import dtos.PaginaDTO;
 import java.util.Date;
@@ -98,8 +97,9 @@ public class IncidenciaDAO {
         if(filtro.getResumen().isPresent()) {
             consulta.where(qi.resumen.containsIgnoreCase(filtro.getResumen().get()));
         }
-        consulta.limit(pagina.getTamano().or(Constantes.TAMANO_PAGINA));
-        consulta.offset(pagina.getNumero().or(Constantes.NUMERO_PAGINA));
+        
+        consulta.limit(pagina.getTamano());
+        consulta.offset(pagina.getNumero());
         
         return consulta.fetch();
     }

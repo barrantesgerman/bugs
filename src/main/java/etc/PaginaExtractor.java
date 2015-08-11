@@ -16,6 +16,7 @@
 package etc;
 
 import com.google.common.base.Optional;
+import conf.Constantes;
 import dtos.PaginaDTO;
 import ninja.Context;
 import ninja.params.ArgumentExtractor;
@@ -30,15 +31,14 @@ public class PaginaExtractor implements ArgumentExtractor<PaginaDTO> {
     @Override
     public PaginaDTO extract(Context context) {
         PaginaDTO pagina = new PaginaDTO();
-        pagina.setNumero(
-                Optional.fromNullable(
-                        context.getParameterAs("numero", Long.class)));
-        pagina.setTamano(
-                Optional.fromNullable(
-                        context.getParameterAs("tamano", Long.class)));
-//        pagina.setTotal(
-//                Optional.fromNullable(
-//                        context.getParameterAsInteger("total")));
+
+        Optional<Long> oNumero = Optional.fromNullable(
+                context.getParameterAs("numero", Long.class));
+        Optional<Long> oTamano = Optional.fromNullable(
+                context.getParameterAs("tamano", Long.class));
+        pagina.setNumero(oNumero.or(Constantes.NUMERO_PAGINA));
+        pagina.setTamano(oTamano.or(Constantes.TAMANO_PAGINA));
+
         return pagina;
     }
 

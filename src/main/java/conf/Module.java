@@ -21,7 +21,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Singleton
 public class Module extends AbstractModule {
-
+    
     @Override
     protected void configure() {
         bind(JacksonConfig.class);
