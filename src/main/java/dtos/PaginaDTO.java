@@ -16,7 +16,6 @@
 package dtos;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import conf.Constantes;
 import lombok.Data;
 
 /**
