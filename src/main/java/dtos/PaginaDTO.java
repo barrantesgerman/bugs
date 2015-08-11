@@ -51,7 +51,7 @@ public class PaginaDTO {
      * @return true si es la primera página.
      */
     public boolean isPrimera() {
-        return numero == Constantes.NUMERO_PAGINA;
+        return numero == 0;
     }
 
     /**

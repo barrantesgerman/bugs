@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package etc;
 
 import java.lang.annotation.ElementType;
@@ -31,4 +30,18 @@ import ninja.params.WithArgumentExtractor;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
 public @interface Pagina {
+
+    /**
+     * Indica el número de la página. Por defecto es 0.
+     *
+     * @return número de la página.
+     */
+    long numero() default 0L;
+
+    /**
+     * Indica el tamaño de la página. Por defecto es 10.
+     *
+     * @return tamaño de la página.
+     */
+    long tamano() default 10L;
 }

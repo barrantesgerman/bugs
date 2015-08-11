@@ -24,9 +24,6 @@ import java.util.Locale;
  */
 public interface Constantes {
     
-    Long TAMANO_PAGINA = 10L;
-    Long NUMERO_PAGINA = 0L;
-
     String PATRON_FECHA = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     Locale LOCALE_CR = new Locale("es", "CR");
     SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(PATRON_FECHA, LOCALE_CR);
