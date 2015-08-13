@@ -81,6 +81,10 @@ public class Routes implements ApplicationRoutes {
         // Catálogo API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/catalogos/estadoIncidencia").with(CatalogoApiController.class, "estadoIncidencia");
+        router.GET().route("/api/catalogos/estadoProyecto").with(CatalogoApiController.class, "estadoProyecto");
+        router.GET().route("/api/catalogos/prioridad").with(CatalogoApiController.class, "prioridad");
+        router.GET().route("/api/catalogos/reproducibilidad").with(CatalogoApiController.class, "reproducibilidad");
+        router.GET().route("/api/catalogos/resolucion").with(CatalogoApiController.class, "resolucion");
         
         ///////////////////////////////////////////////////////////////////////
         // Nota API Controller
