@@ -21,6 +21,7 @@ import ninja.application.ApplicationRoutes;
 import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 import controllers.ApplicationController;
+import controllers.ArchivoApiController;
 import controllers.CatalogoApiController;
 import controllers.CategoriaApiController;
 import controllers.IncidenciaApiController;
@@ -94,6 +95,14 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "crear");
         router.PUT().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "editar");
         router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "eliminar");
+        
+        ///////////////////////////////////////////////////////////////////////
+        // Archivo API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "listar");
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "buscar");
+        router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "crear");
+        router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "eliminar");
         
         ///////////////////////////////////////////////////////////////////////
         // Login / Logout

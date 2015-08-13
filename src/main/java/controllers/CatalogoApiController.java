@@ -45,17 +45,15 @@ public class CatalogoApiController {
 
         Optional<String> lang
                 = Optional.fromNullable(context.getAcceptLanguage());
-        Optional<Result> result = Optional.absent();
         Map<E, String> resultado = new EnumMap<>(enumerado);
 
         for (E elemento : enumerado.getEnumConstants()) {
             resultado.put(
                     elemento,
-                    msg.getWithDefault(
+                    msg.get(
                             enumerado.getSimpleName() + "." + elemento.name(),
-                            "",
-                            lang,
-                            result));
+                            lang)
+                    .or(""));
         }
         return resultado;
     }

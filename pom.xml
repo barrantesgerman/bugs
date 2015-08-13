@@ -242,11 +242,11 @@
             <version>${querydsl.version}</version>
         </dependency>
         
-        <dependency>
+<!--        <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
             <version>${dozer.version}</version>
-        </dependency>
+        </dependency>-->
     
         <dependency>
             <groupId>org.webjars</groupId>
@@ -272,11 +272,11 @@
             <version>5.1.36</version>
         </dependency>
         
-        <dependency>
+<!--        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.186</version>
-        </dependency>
+        </dependency>-->
         <!-- If you want to deploy to a war please -->
         <!-- comment ninja-standalone dependency and  -->
         <!-- uncomment the dependency for ninja-servlet -->

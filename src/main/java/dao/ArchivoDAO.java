@@ -76,13 +76,13 @@ public class ArchivoDAO {
     }
 
     @Transactional
-    public Optional<Archivo> crear(long incidenciaId, Archivo archivo) {
+    public boolean crear(long incidenciaId, Archivo archivo) {
         EntityManager em = entitiyManagerProvider.get();
         archivo.setIncidenciaId(incidenciaId);
         archivo.setActivo(true);
         archivo.setFecha(new Date());
         em.persist(archivo);
-        return Optional.of(archivo);
+        return true;
     }
 
     @Transactional
@@ -90,12 +90,10 @@ public class ArchivoDAO {
         QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qa)
-                .set(qa.activo, false)
+                .delete(qa)
                 .where(
                         qa.id.eq(archivoId),
-                        qa.incidenciaId.eq(incidenciaId),
-                        qa.activo.isTrue())
+                        qa.incidenciaId.eq(incidenciaId))
                 .execute() > 0L;
     }
 }

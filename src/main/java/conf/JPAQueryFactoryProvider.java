@@ -21,6 +21,7 @@ import javax.inject.Provider;
 import javax.persistence.EntityManager;
 
 /**
+ * Proveedor para JPAQueryFactory de QueryDSL.
  *
  * @author Herman
  * @since 22/07/2015
