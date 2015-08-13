@@ -17,10 +17,14 @@ package controllers;
 
 import com.google.common.base.Optional;
 import dtos.Resultados;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import javax.inject.Inject;
 import models.EstadoIncidencia;
+import models.EstadoProyecto;
+import models.Prioridad;
+import models.Reproducibilidad;
+import models.Resolucion;
 import ninja.Context;
 import ninja.Result;
 import ninja.i18n.Messages;
@@ -35,23 +39,64 @@ public class CatalogoApiController {
     @Inject
     private Messages msg;
 
-    public Result estadoIncidencia(Context context) {
-        
-        Optional<String> lang =
-                Optional.fromNullable(context.getAcceptLanguage());
-        
-        Map<EstadoIncidencia, String> resultado = new HashMap<>();
-        
-        for (EstadoIncidencia estado : EstadoIncidencia.values()) {
+    private <E extends Enum<E>> Map<E, String> enumToMap(
+            Context context,
+            Class<E> enumerado) {
+
+        Optional<String> lang
+                = Optional.fromNullable(context.getAcceptLanguage());
+        Optional<Result> result = Optional.absent();
+        Map<E, String> resultado = new EnumMap<>(enumerado);
+
+        for (E elemento : enumerado.getEnumConstants()) {
             resultado.put(
-                    estado,
+                    elemento,
                     msg.getWithDefault(
-                            "estadoIncidencia." + estado.name(),
+                            enumerado.getSimpleName() + "." + elemento.name(),
                             "",
                             lang,
-                            Optional.<Result>absent()));
+                            result));
         }
-        
+        return resultado;
+    }
+
+    public Result estadoIncidencia(Context context) {
+
+        Map<EstadoIncidencia, String> resultado
+                = enumToMap(context, EstadoIncidencia.class);
+
+        return Resultados.ok(resultado);
+    }
+
+    public Result estadoProyecto(Context context) {
+
+        Map<EstadoProyecto, String> resultado
+                = enumToMap(context, EstadoProyecto.class);
+
+        return Resultados.ok(resultado);
+    }
+
+    public Result prioridad(Context context) {
+
+        Map<Prioridad, String> resultado
+                = enumToMap(context, Prioridad.class);
+
+        return Resultados.ok(resultado);
+    }
+
+    public Result reproducibilidad(Context context) {
+
+        Map<Reproducibilidad, String> resultado
+                = enumToMap(context, Reproducibilidad.class);
+
+        return Resultados.ok(resultado);
+    }
+
+    public Result resolucion(Context context) {
+
+        Map<Resolucion, String> resultado
+                = enumToMap(context, Resolucion.class);
+
         return Resultados.ok(resultado);
     }
 
