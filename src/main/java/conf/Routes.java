@@ -21,6 +21,7 @@ import ninja.application.ApplicationRoutes;
 import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 import controllers.ApplicationController;
+import controllers.CatalogoApiController;
 import controllers.CategoriaApiController;
 import controllers.IncidenciaApiController;
 import controllers.LoginLogoutController;
@@ -75,6 +76,11 @@ public class Routes implements ApplicationRoutes {
         // Incidencia API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/incidencias").with(IncidenciaApiController.class, "listar");
+        
+        ///////////////////////////////////////////////////////////////////////
+        // Catálogo API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/catalogos/estadoIncidencia").with(CatalogoApiController.class, "estadoIncidencia");
         
         ///////////////////////////////////////////////////////////////////////
         // Nota API Controller
