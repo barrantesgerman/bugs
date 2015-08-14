@@ -90,12 +90,10 @@ public class ArchivoDAO {
         QArchivo qa = QArchivo.archivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
-                .update(qa)
-                .set(qa.activo, false)
+                .delete(qa)
                 .where(
                         qa.id.eq(archivoId),
-                        qa.incidenciaId.eq(incidenciaId),
-                        qa.activo.isTrue())
+                        qa.incidenciaId.eq(incidenciaId))
                 .execute() > 0L;
     }
 }
