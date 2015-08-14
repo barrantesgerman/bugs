@@ -23,6 +23,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -44,9 +47,13 @@ public class Nota extends ModeloBase implements Serializable {
     private long incidenciaId;
     @Column(name = "usuario")
     private String usuario;
+    @NotNull
+    @Past
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @NotNull
+    @Size(min = 1, max = 5000)
     @Column(name = "nota")
     private String nota;
 

@@ -60,8 +60,8 @@ public class ArchivoApiController {
             return Results
                     .ok()
                     .doNotCacheContent()
-                    .addHeader("Content-Disposition", "inline; filename=\"" + archivo.getNombre() + "\"")
-                    .addHeader("Content-Length", "" + archivo.getContenido().length)
+                    .addHeader("Content-Disposition", "inline; filename=\"" + archivo.getNombre() + "\"")//attachment; o inline;
+                    .addHeader("Content-Length", String.valueOf(archivo.getContenido().length))
                     .addHeader("Content-Transfer-Encoding", "binary")
                     .addHeader("Content-Description", "File Transfer")
                     .contentType(archivo.getMimeType())
