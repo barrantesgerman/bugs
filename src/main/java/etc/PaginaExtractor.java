@@ -27,18 +27,25 @@ import ninja.params.ArgumentExtractor;
  */
 public class PaginaExtractor implements ArgumentExtractor<PaginaDTO> {
 
+    private final long numero;
+    private final long tamano;
+
+    public PaginaExtractor(Pagina pagina) {
+        this.numero = pagina.numero();
+        this.tamano = pagina.tamano();
+    }
+
     @Override
     public PaginaDTO extract(Context context) {
         PaginaDTO pagina = new PaginaDTO();
-        pagina.setNumero(
-                Optional.fromNullable(
-                        context.getParameterAs("numero", Long.class)));
-        pagina.setTamano(
-                Optional.fromNullable(
-                        context.getParameterAs("tamano", Long.class)));
-//        pagina.setTotal(
-//                Optional.fromNullable(
-//                        context.getParameterAsInteger("total")));
+
+        Optional<Long> oNumero = Optional.fromNullable(
+                context.getParameterAs("numero", Long.class));
+        Optional<Long> oTamano = Optional.fromNullable(
+                context.getParameterAs("tamano", Long.class));
+        pagina.setNumero(oNumero.or(numero));
+        pagina.setTamano(oTamano.or(tamano));
+
         return pagina;
     }
 

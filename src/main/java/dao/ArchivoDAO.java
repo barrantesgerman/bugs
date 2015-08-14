@@ -76,13 +76,13 @@ public class ArchivoDAO {
     }
 
     @Transactional
-    public Optional<Archivo> crear(long incidenciaId, Archivo archivo) {
+    public boolean crear(long incidenciaId, Archivo archivo) {
         EntityManager em = entitiyManagerProvider.get();
         archivo.setIncidenciaId(incidenciaId);
         archivo.setActivo(true);
         archivo.setFecha(new Date());
         em.persist(archivo);
-        return Optional.of(archivo);
+        return true;
     }
 
     @Transactional

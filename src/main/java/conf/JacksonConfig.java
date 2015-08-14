@@ -22,6 +22,7 @@ import javax.inject.Singleton;
 import ninja.lifecycle.Start;
 
 /**
+ * Configuración inicial de Jackson.
  *
  * @author Herman
  * @since 06/08/2015

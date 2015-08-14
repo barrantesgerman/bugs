@@ -16,7 +16,6 @@
 package dtos;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.google.common.base.Optional;
 import lombok.Data;
 
 /**
@@ -28,11 +27,40 @@ import lombok.Data;
 @JsonRootName(value = "pagina")
 public class PaginaDTO {
 
-    private Optional<Long> numero;
-    private Optional<Long> tamano;
-//    private Optional<Integer> total;
-//    private boolean primera;
-//    private boolean ultima;
+    /**
+     * Indica el número de la página actual.
+     */
+    private Long numero;
+    /**
+     * Indica el tamaño de la página.
+     */
+    private Long tamano;
+    /**
+     * Indica la cantidad de elementos de página actual.
+     */
+    private Long cantidad;
+    /**
+     * Indica la cantidad total de páginas.
+     */
+    private Long total;
+
+    /**
+     * Indica si es la primera página.
+     *
+     * @return true si es la primera página.
+     */
+    public boolean isPrimera() {
+        return numero == 0;
+    }
+
+    /**
+     * Indica si es la última página.
+     *
+     * @return true si es la última página.
+     */
+    public boolean isUltima() {
+        return numero == total;
+    }
 //    private List<OrdenDTO> orden;
 
 }

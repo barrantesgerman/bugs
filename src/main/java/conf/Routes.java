@@ -21,6 +21,8 @@ import ninja.application.ApplicationRoutes;
 import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
 import controllers.ApplicationController;
+import controllers.ArchivoApiController;
+import controllers.CatalogoApiController;
 import controllers.CategoriaApiController;
 import controllers.IncidenciaApiController;
 import controllers.LoginLogoutController;
@@ -77,6 +79,15 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/incidencias").with(IncidenciaApiController.class, "listar");
         
         ///////////////////////////////////////////////////////////////////////
+        // Catálogo API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/catalogos/estadoIncidencia").with(CatalogoApiController.class, "estadoIncidencia");
+        router.GET().route("/api/catalogos/estadoProyecto").with(CatalogoApiController.class, "estadoProyecto");
+        router.GET().route("/api/catalogos/prioridad").with(CatalogoApiController.class, "prioridad");
+        router.GET().route("/api/catalogos/reproducibilidad").with(CatalogoApiController.class, "reproducibilidad");
+        router.GET().route("/api/catalogos/resolucion").with(CatalogoApiController.class, "resolucion");
+        
+        ///////////////////////////////////////////////////////////////////////
         // Nota API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "listar");
@@ -84,6 +95,14 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "crear");
         router.PUT().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "editar");
         router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "eliminar");
+        
+        ///////////////////////////////////////////////////////////////////////
+        // Archivo API Controller
+        ///////////////////////////////////////////////////////////////////////
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "listar");
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "buscar");
+        router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "crear");
+        router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "eliminar");
         
         ///////////////////////////////////////////////////////////////////////
         // Login / Logout
