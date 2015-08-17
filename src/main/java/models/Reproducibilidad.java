@@ -16,6 +16,7 @@
 package models;
 
 /**
+ * Representa la frecuencia en la que ocurre la incidencia.
  *
  * @author Herman
  * @since 22/07/2015

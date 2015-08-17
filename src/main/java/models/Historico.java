@@ -27,6 +27,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa el historial de cambios que sufre una incidencia en su ciclo de
+ * vida.
  *
  * @author Herman
  * @since 22/07/2015
@@ -38,17 +40,35 @@ import lombok.ToString;
 @Table(name = "historico")
 public class Historico extends ModeloBase implements Serializable {
 
+    /**
+     * ID de la incidencia a la que esta relacionada el archivo.
+     */
     @Column(name = "incidencia_id")
     private long incidenciaId;
+    /**
+     * Usuario que realizó la acción.
+     */
     @Column(name = "usuario")
     private String usuario;
+    /**
+     * Campo afectado.
+     */
     @Column(name = "campo")
     private String campo;
+    /**
+     * Fecha en la que se realizó la acción.
+     */
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    /**
+     * Valor previo a realizar el cambio.
+     */
     @Column(name = "antes")
     private String antes;
+    /**
+     * Valor posterior a la realización del cambio.
+     */
     @Column(name = "ahora")
     private String ahora;
 }

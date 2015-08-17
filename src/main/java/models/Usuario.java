@@ -24,6 +24,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa un usuario del sistema.
  *
  * @author Herman
  * @since 22/07/2015
@@ -35,12 +36,24 @@ import lombok.ToString;
 @Table(name = "usuario")
 public class Usuario extends ModeloBase implements Serializable {
 
+    /**
+     * Nombre del usuario, para autenticación.
+     */
     @Column(name = "usuario")
     private String usuario;
+    /**
+     * Clave del usuario.
+     */
     @Column(name = "clave")
     private String clave;
+    /**
+     * Nombre real del usuario.
+     */
     @Column(name = "nombre")
     private String nombre;
+    /**
+     * Correo del usuario.
+     */
     @Column(name = "correo")
     private String correo;
 

@@ -31,6 +31,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa un archivo que forma parte de la evidencia de una incidencia.
  *
  * @author Herman
  * @since 22/07/2015
@@ -42,18 +43,36 @@ import lombok.ToString;
 @Table(name = "archivo")
 public class Archivo extends ModeloBase implements Serializable {
 
+    /**
+     * ID de la incidencia a la que esta relacionada el archivo.
+     */
     @JsonIgnore
     @Column(name = "incidencia_id")
     private long incidenciaId;
+    /**
+     * Usuario que subió el archivo.
+     */
     @Column(name = "usuario")
     private String usuario;
+    /**
+     * Nombre del archivo.
+     */
     @Column(name = "nombre")
     private String nombre;
+    /**
+     * MimeType del archivo.
+     */
     @Column(name = "mimeType")
     private String mimeType;
+    /**
+     * Fecha en que fue subido el archivo.
+     */
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    /**
+     * Contenido en bytes del archivo.
+     */
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "contenido")

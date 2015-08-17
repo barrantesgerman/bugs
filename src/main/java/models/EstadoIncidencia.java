@@ -16,6 +16,8 @@
 package models;
 
 /**
+ * Representa cada uno de los estados en los que se puede encontrar una
+ * incidencia.
  *
  * @author Herman
  * @since 22/07/2015

@@ -41,9 +41,7 @@ public class LoginLogoutController {
             @Param("clave") @Required @Length(min = 5) String clave,
             Context context,
             Validation validation) {
-        int x;
         if (validation.hasViolations()) {
-            x = 0;
         }
         boolean isUserNameAndPasswordValid = this.userDao.isUserAndPasswordValid(usuario, clave);
         if (isUserNameAndPasswordValid) {

@@ -25,6 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa un módulo de un proyecto.
  *
  * @author Herman
  * @since 22/07/2015
@@ -36,9 +37,15 @@ import lombok.ToString;
 @Table(name = "modulo")
 public class Modulo extends ModeloBase implements Serializable {
 
+    /**
+     * ID del proyecto a la que esta relacionada el módulo.
+     */
     @JsonIgnore
     @Column(name = "proyecto_id")
     private long proyectoId;
+    /**
+     * Nombre del módulo.
+     */
     @Column(name = "nombre")
     private String nombre;
 

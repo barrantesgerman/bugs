@@ -16,6 +16,7 @@
 package models;
 
 /**
+ * Representa la prioridad en la que debe ser atendida una incidencia.
  *
  * @author Herman
  * @since 22/07/2015
