@@ -100,7 +100,7 @@ public class Routes implements ApplicationRoutes {
         // Archivo API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "listar");
-        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "buscar");
+        router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{modo: inline|attachment}/{archivoId: [0-9]+}").with(ArchivoApiController.class, "buscar");
         router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "crear");
         router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "eliminar");
         

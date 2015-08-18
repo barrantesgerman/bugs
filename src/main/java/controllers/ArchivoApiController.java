@@ -52,6 +52,7 @@ public class ArchivoApiController {
 
     public Result buscar(
             @PathParam("incidenciaId") Long incidenciaId,
+            @PathParam("modo") String modo,
             @PathParam("archivoId") Long archivoId) {
 
         Optional<Archivo> oArchivo = archivoDAO.buscar(incidenciaId, archivoId);
@@ -60,7 +61,7 @@ public class ArchivoApiController {
             return Results
                     .ok()
                     .doNotCacheContent()
-                    .addHeader("Content-Disposition", "inline; filename=\"" + archivo.getNombre() + "\"")//attachment; o inline;
+                    .addHeader("Content-Disposition", modo + "; filename=\"" + archivo.getNombre() + "\"")
                     .addHeader("Content-Length", String.valueOf(archivo.getContenido().length))
                     .addHeader("Content-Transfer-Encoding", "binary")
                     .addHeader("Content-Description", "File Transfer")
