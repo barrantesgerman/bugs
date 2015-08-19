@@ -21,7 +21,7 @@ import dtos.ArchivoDTO;
 import java.util.List;
 import javax.inject.Inject;
 import dtos.Resultados;
-import etc.LoggedInUser;
+import etc.UsuarioLogeado;
 import java.io.InputStream;
 import models.Archivo;
 import ninja.Context;
@@ -74,7 +74,7 @@ public class ArchivoApiController {
 
     public Result crear(
             @PathParam("incidenciaId") Long incidenciaId,
-            @LoggedInUser String usuario,
+            @UsuarioLogeado String usuario,
             Context context) throws Exception {
 
         if (context.isMultipart()) {

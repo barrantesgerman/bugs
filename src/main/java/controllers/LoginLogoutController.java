@@ -59,6 +59,6 @@ public class LoginLogoutController {
     public Result logout(Context context) {
         context.getSession().clear();
         context.getFlashScope().success("login.logoutSuccessful");
-        return Results.redirect("/");
+        return Results.redirect("/login");
     }
 }

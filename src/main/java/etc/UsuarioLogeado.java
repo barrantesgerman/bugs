@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 import ninja.params.WithArgumentExtractor;
 
-@WithArgumentExtractor(LoggedInUserExtractor.class)
+@WithArgumentExtractor(UsuarioLogeadoExtractor.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER})
-public @interface LoggedInUser {
+public @interface UsuarioLogeado {
 }

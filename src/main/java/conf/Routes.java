@@ -20,7 +20,7 @@ import ninja.Router;
 import ninja.application.ApplicationRoutes;
 import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
-import controllers.ApplicationController;
+import controllers.InicioController;
 import controllers.ArchivoApiController;
 import controllers.CatalogoApiController;
 import controllers.CategoriaApiController;
@@ -120,7 +120,7 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////
         // Index
         ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/").with(ApplicationController.class, "index");
+        router.GET().route("/").with(InicioController.class, "index");
     }
 
 }
