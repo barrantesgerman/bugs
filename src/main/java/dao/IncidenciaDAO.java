@@ -17,22 +17,13 @@ package dao;
 
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import dtos.FiltroIncidenciaDTO;
-import dtos.PaginaDTO;
 import java.util.Date;
-import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
-import models.EstadoIncidencia;
 import models.Incidencia;
-import models.Prioridad;
 import models.QIncidencia;
-import models.Reproducibilidad;
-import models.Resolucion;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -46,63 +37,6 @@ public class IncidenciaDAO {
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
     @Inject
     private Provider<EntityManager> entitiyManagerProvider;
-
-    @UnitOfWork
-    public List<Incidencia> listar(
-            FiltroIncidenciaDTO filtro,
-            PaginaDTO pagina) {
-        
-        QIncidencia qi = QIncidencia.incidencia;
-        JPAQueryFactory query = jpaQueryFactoryProvider.get();
-        JPAQuery<Incidencia> consulta = query
-                .selectFrom(qi)
-                .where(qi.activo.isTrue());
-        if(filtro.getProyectoId().isPresent()){
-            consulta.where(qi.proyectoId.eq(filtro.getProyectoId().get()));
-        }
-        if(filtro.getModuloId().isPresent()){
-            consulta.where(qi.moduloId.eq(filtro.getModuloId().get()));
-        }
-        if(filtro.getCategoriaId().isPresent()){
-            consulta.where(qi.categoriaId.eq(filtro.getCategoriaId().get()));
-        }
-        if(!filtro.getEstado().isEmpty()){
-            BooleanBuilder builder = new BooleanBuilder();
-            for(EstadoIncidencia estado: filtro.getEstado()) {
-                builder.or(qi.estado.eq(estado));
-            }
-            consulta.where(builder);
-        }
-        if(!filtro.getPrioridad().isEmpty()){
-            BooleanBuilder builder = new BooleanBuilder();
-            for(Prioridad prioridad: filtro.getPrioridad()) {
-                builder.or(qi.prioridad.eq(prioridad));
-            }
-            consulta.where(builder);
-        }
-        if(!filtro.getReproducibilidad().isEmpty()){
-            BooleanBuilder builder = new BooleanBuilder();
-            for(Reproducibilidad reproducibilidad: filtro.getReproducibilidad()) {
-                builder.or(qi.reproducibilidad.eq(reproducibilidad));
-            }
-            consulta.where(builder);
-        }
-        if(!filtro.getResolucion().isEmpty()){
-            BooleanBuilder builder = new BooleanBuilder();
-            for(Resolucion resolucion: filtro.getResolucion()) {
-                builder.or(qi.resolucion.eq(resolucion));
-            }
-            consulta.where(builder);
-        }
-        if(filtro.getResumen().isPresent()) {
-            consulta.where(qi.resumen.containsIgnoreCase(filtro.getResumen().get()));
-        }
-        
-        consulta.limit(pagina.getTamano());
-        consulta.offset(pagina.getNumero());
-        
-        return consulta.fetch();
-    }
 
     @UnitOfWork
     public Optional<Incidencia> buscar(long id) {

@@ -29,17 +29,18 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Representa una incidencia.
+ * Representa la vista de la incidencia, la cual facilita la obtención de la
+ * información relacionada a la incidencia.
  *
- * @author Herman
- * @since 22/07/2015
+ * @author Herman Barrantes
+ * @since 19/08/2015
  */
 @Data
 @EqualsAndHashCode(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId"})
 @ToString(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId"})
 @Entity
-@Table(name = "incidencia")
-public class Incidencia extends ModeloBase implements Serializable {
+@Table(name = "incidencia_view")
+public class IncidenciaView extends ModeloBase implements Serializable {
 
     /**
      * ID del proyecto a la que esta relacionada la incidencia.
@@ -47,16 +48,31 @@ public class Incidencia extends ModeloBase implements Serializable {
     @Column(name = "proyecto_id")
     private long proyectoId;
     /**
+     * Nombre del proyecto a la que esta relacionada la incidencia.
+     */
+    @Column(name = "proyecto_nombre")
+    private String proyectoNombre;
+    /**
      * ID del módulo a la que esta relacionada la incidencia, este campo es
      * opcional.
      */
     @Column(name = "modulo_id")
     private long moduloId;
     /**
+     * Nombre del módulo a la que esta relacionada la incidencia.
+     */
+    @Column(name = "modulo_nombre")
+    private String moduloNombre;
+    /**
      * ID de la categoría a la que esta relacionada la incidencia.
      */
     @Column(name = "categoria_id")
     private long categoriaId;
+    /**
+     * Descripción de la categoría a la que esta relacionada la incidencia.
+     */
+    @Column(name = "categoria_descripcion")
+    private String categoriaDescripcion;
     /**
      * Estado en el que se encuentra la incidencia.
      */
@@ -86,21 +102,6 @@ public class Incidencia extends ModeloBase implements Serializable {
      */
     @Column(name = "resumen")
     private String resumen;
-    /**
-     * Descripción detallada de lo que se trata la incidencia.
-     */
-    @Column(name = "descripcion")
-    private String descripcion;
-    /**
-     * Pasos a seguir para reproducir la incidencia.
-     */
-    @Column(name = "pasos")
-    private String pasos;
-    /**
-     * Información extra que puede ayudar a la resolución de la incidencia.
-     */
-    @Column(name = "informacion_adicional")
-    private String informacionAdicional;
     ////////////////////////////////////////////////////////////////////////////
     // Fechas de auditoría
     ////////////////////////////////////////////////////////////////////////////
@@ -184,5 +185,4 @@ public class Incidencia extends ModeloBase implements Serializable {
      */
     @Column(name = "usuario_cierre")
     private String usuarioCierre;
-
 }

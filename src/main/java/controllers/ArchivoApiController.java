@@ -21,6 +21,7 @@ import dtos.ArchivoDTO;
 import java.util.List;
 import javax.inject.Inject;
 import dtos.Resultados;
+import etc.LoggedInUser;
 import java.io.InputStream;
 import models.Archivo;
 import ninja.Context;
@@ -73,6 +74,7 @@ public class ArchivoApiController {
 
     public Result crear(
             @PathParam("incidenciaId") Long incidenciaId,
+            @LoggedInUser String usuario,
             Context context) throws Exception {
 
         if (context.isMultipart()) {
@@ -92,6 +94,7 @@ public class ArchivoApiController {
                     Archivo archivo = new Archivo();
                     archivo.setNombre(nombre);
                     archivo.setMimeType(mimeType);
+                    archivo.setUsuario(usuario);
                     archivo.setContenido(IOUtils.toByteArray(stream));
 
                     boolean resultado = archivoDAO.crear(incidenciaId, archivo);

@@ -15,6 +15,7 @@
  */
 package conf;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import javax.inject.Inject;
@@ -38,7 +39,9 @@ public class JacksonConfig {
     @Start(order = 90)
     public void configureObjectMapper() {
         objectMapper.setDateFormat(Constantes.SIMPLE_DATE_FORMAT);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         xmlMapper.setDateFormat(Constantes.SIMPLE_DATE_FORMAT);
+        xmlMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
 }

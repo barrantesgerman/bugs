@@ -17,7 +17,9 @@ package controllers;
 
 import com.google.common.base.Optional;
 import dao.IncidenciaDAO;
+import dao.IncidenciaViewDAO;
 import dtos.FiltroIncidenciaDTO;
+import dtos.IncidenciaViewDTO;
 import dtos.PaginaDTO;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,13 +40,21 @@ public class IncidenciaApiController {
     @Inject
     private IncidenciaDAO incidenciaDAO;
 
+    @Inject
+    private IncidenciaViewDAO incidenciaViewDAO;
+
     public Result listar(
             @FiltroIncidencia FiltroIncidenciaDTO filtro,
             @Pagina PaginaDTO pagina) {
 
-        List<Incidencia> incidencias = incidenciaDAO.listar(filtro, pagina);
+        List<IncidenciaViewDTO> incidencias
+                = incidenciaViewDAO.listar(filtro, pagina);
+        Long total = incidenciaViewDAO.cantidad(filtro);
+        pagina.setCantidad(incidencias.size());
+        pagina.setTotal(total.intValue());
+
         if (!incidencias.isEmpty()) {
-            return Resultados.ok(incidencias);
+            return Resultados.ok(incidencias, pagina);
         }
         return Resultados.notFound();
     }

@@ -49,6 +49,16 @@ public class Resultados {
                 .fallbackContentType(Result.APPLICATION_JSON)
                 .render(new ResultadoDTO(HttpCode.OK, object));
     }
+    
+    public static Result ok(List<?> lista, PaginaDTO pagina) {
+        return Results
+                .ok()
+                .supportedContentTypes(
+                        Result.APPLICATION_JSON,
+                        Result.APPLICATION_XML)
+                .fallbackContentType(Result.APPLICATION_JSON)
+                .render(new ResultadoPaginaDTO(HttpCode.OK, lista, pagina));
+    }
 
     public static Result created(Object object) {
         return Results
