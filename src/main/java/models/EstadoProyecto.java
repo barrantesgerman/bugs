@@ -23,7 +23,18 @@ package models;
  */
 public enum EstadoProyecto {
 
+    /**
+     * El proyecto se encuentra en estado de desarrollo.
+     */
     EN_DESARROLLO,
+    /**
+     * El proyecto se a entregado al usuario final y solo se le esta dando
+     * mantenimiento al mismo.
+     */
     ENTREGADO,
+    /**
+     * El proyecto ya terminó su ciclo de vida, y esta guardado para efectos
+     * históricos.
+     */
     OBSOLETO;
 }

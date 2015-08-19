@@ -23,10 +23,34 @@ package models;
  */
 public enum Prioridad {
 
+    /**
+     * Se debe atender en algún momento, pero no representa ningún riesgo o
+     * problema para el usuario.
+     */
     NINGUNA,
+    /**
+     * Se debe atender en algún momento, pero el riesgo o problema para el
+     * usuario es mínimo.
+     */
     BAJA,
+    /**
+     * Se debe atender en algún momento, pero el riesgo o problema para el
+     * usuario es moderado.
+     */
     NORMAL,
+    /**
+     * Se debe atender pronto, ya que el riesgo o problema para el usuario es
+     * alto.
+     */
     ALTA,
+    /**
+     * Se debe atender urgentemente, ya que consiste en un error grave que
+     * bloque el flujo de trabajo para el usuario.
+     */
     URGENTE,
+    /**
+     * Se debe atender inmediatamente, ya que consiste en un error fatal que
+     * hace caer el sistema o procesos del mismo.
+     */
     INMEDIATA;
 }

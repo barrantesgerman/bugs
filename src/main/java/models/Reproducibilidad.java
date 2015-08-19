@@ -23,7 +23,18 @@ package models;
  */
 public enum Reproducibilidad {
 
+    /**
+     * Ocurre todo el tiempo, siguiendo los pasos indicados.
+     */
     SIEMPRE,
+    /**
+     * Se tiene la certeza de que ocurre, pero los pasos para reproducirlo no
+     * son claros.
+     */
     ALEATORIO,
+    /**
+     * Ocurre bajo circunstancias desconocidas y no se tiene idea de como
+     * reproducirlo.
+     */
     DESCONOCIDO;
 }
