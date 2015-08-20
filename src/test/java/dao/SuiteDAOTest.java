@@ -27,8 +27,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     ProyectoDAOTest.class,
     ModuloDAOTest.class,
-    CategoriaDAOTest.class
+    CategoriaDAOTest.class,
+    IncidenciaDAOTest.class
 })
-public class SuiteTest {
+public class SuiteDAOTest {
 
 }

@@ -51,22 +51,36 @@ public class IncidenciaDAO {
     }
 
     @Transactional
-    public Optional<Incidencia> crear(Incidencia incidencia) {
+    public Optional<Incidencia> crear(String usuario, Incidencia incidencia) {
         EntityManager em = entitiyManagerProvider.get();
         incidencia.setActivo(true);
         incidencia.setFechaCreacion(new Date());
+        incidencia.setFechaActualizacion(new Date());
+        incidencia.setUsuarioCreacion(usuario);
+        incidencia.setUsuarioActualizacion(usuario);
         em.persist(incidencia);
         return Optional.of(incidencia);
     }
 
     @Transactional
-    public boolean editar(long id, Incidencia incidencia) {
+    public boolean editar(long id, String usuario, Incidencia incidencia) {
         QIncidencia qi = QIncidencia.incidencia;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
                 .update(qi)
-                .set(qi.descripcion, incidencia.getDescripcion())
+                .set(qi.proyectoId, incidencia.getProyectoId())
+                .set(qi.moduloId, incidencia.getModuloId())
+                .set(qi.categoriaId, incidencia.getCategoriaId())
                 .set(qi.estado, incidencia.getEstado())
+                .set(qi.prioridad, incidencia.getPrioridad())
+                .set(qi.reproducibilidad, incidencia.getReproducibilidad())
+                .set(qi.resolucion, incidencia.getResolucion())
+                .set(qi.resumen, incidencia.getResumen())
+                .set(qi.descripcion, incidencia.getDescripcion())
+                .set(qi.pasos, incidencia.getPasos())
+                .set(qi.informacionAdicional, incidencia.getInformacionAdicional())
+                .set(qi.fechaActualizacion, new Date())
+                .set(qi.usuarioActualizacion, usuario)
                 .where(
                         qi.id.eq(id),
                         qi.activo.isTrue())
