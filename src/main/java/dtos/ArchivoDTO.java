@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 /**
+ * Representa un archivo liviano (sin el arreglo de bytes).
  *
  * @author Herman Barrantes
  * @since 06/08/2015
@@ -30,10 +31,25 @@ import lombok.Value;
 @JsonRootName(value = "archivo")
 public class ArchivoDTO {
 
+    /**
+     * ID del archivo.
+     */
     private final long id;
+    /**
+     * Usuario que subió el archivo.
+     */
     private final String usuario;
+    /**
+     * Nombre del archivo.
+     */
     private final String nombre;
+    /**
+     * MimeType del archivo.
+     */
     private final String mimeType;
+    /**
+     * Fecha en que fue subido el archivo.
+     */
     private final Date fecha;
 
 }

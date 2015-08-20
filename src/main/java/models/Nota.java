@@ -23,11 +23,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa una nota relacionada a una incidencia.
  *
  * @author Herman
  * @since 22/07/2015
@@ -39,14 +43,30 @@ import lombok.ToString;
 @Table(name = "nota")
 public class Nota extends ModeloBase implements Serializable {
 
+    /**
+     * ID de la incidencia a la que esta relacionada la nota.
+     */
     @JsonIgnore
     @Column(name = "incidencia_id")
     private long incidenciaId;
+    /**
+     * Usuario que creó la nota.
+     */
     @Column(name = "usuario")
     private String usuario;
+    /**
+     * Fecha en que fue creada la nota.
+     */
+    @NotNull
+    @Past
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    /**
+     * Contenido de la nota.
+     */
+    @NotNull
+    @Size(min = 1, max = 5000)
     @Column(name = "nota")
     private String nota;
 

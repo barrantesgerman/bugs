@@ -28,6 +28,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * Modelo base para englobar las características de los demás modelos.
  *
  * @author Herman
  * @since 22/07/2015
@@ -39,9 +40,15 @@ import lombok.ToString;
 @MappedSuperclass
 public abstract class ModeloBase implements Serializable {
 
+    /**
+     * Identificador único.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    /**
+     * Estado para el borrado lógico.
+     */
     @JsonIgnore
     @Column(name = "activo")
     private boolean activo;

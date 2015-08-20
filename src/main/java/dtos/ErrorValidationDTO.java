@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package models;
+package dtos;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.Value;
 
 /**
- * Representa cada uno de los estados en los que se puede encontrar un proyecto.
+ * Representa un error de validación según la especificación JSR 303.
  *
- * @author Herman
- * @since 22/07/2015
+ * @author Herman Barrantes
+ * @since 14/08/2015
  */
-public enum EstadoProyecto {
+@Value
+@JsonRootName(value = "error")
+public class ErrorValidationDTO {
 
     /**
-     * El proyecto se encuentra en estado de desarrollo.
+     * Campo con errores.
      */
-    EN_DESARROLLO,
+    private final String campo;
     /**
-     * El proyecto se a entregado al usuario final y solo se le esta dando
-     * mantenimiento al mismo.
+     * Mensaje de error.
      */
-    ENTREGADO,
-    /**
-     * El proyecto ya terminó su ciclo de vida, y esta guardado para efectos
-     * históricos.
-     */
-    OBSOLETO;
+    private final String mensaje;
 }

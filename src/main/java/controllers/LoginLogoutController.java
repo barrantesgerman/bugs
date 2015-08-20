@@ -41,9 +41,7 @@ public class LoginLogoutController {
             @Param("clave") @Required @Length(min = 5) String clave,
             Context context,
             Validation validation) {
-        int x;
         if (validation.hasViolations()) {
-            x = 0;
         }
         boolean isUserNameAndPasswordValid = this.userDao.isUserAndPasswordValid(usuario, clave);
         if (isUserNameAndPasswordValid) {
@@ -61,6 +59,6 @@ public class LoginLogoutController {
     public Result logout(Context context) {
         context.getSession().clear();
         context.getFlashScope().success("login.logoutSuccessful");
-        return Results.redirect("/");
+        return Results.redirect("/login");
     }
 }

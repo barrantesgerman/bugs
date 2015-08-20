@@ -32,16 +32,16 @@ import ninja.params.WithArgumentExtractor;
 public @interface Pagina {
 
     /**
-     * Indica el número de la página. Por defecto es 0.
+     * Indica el número de la página. Por defecto es 1.
      *
      * @return número de la página.
      */
-    long numero() default 0L;
+    int numero() default 1;
 
     /**
      * Indica el tamaño de la página. Por defecto es 10.
      *
      * @return tamaño de la página.
      */
-    long tamano() default 10L;
+    int tamano() default 10;
 }

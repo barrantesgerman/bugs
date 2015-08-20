@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Getter;
 
 /**
+ * Representa una respuesta de los servicios del API.
  *
  * @author Herman
  * @since 23/07/2015
@@ -27,8 +28,17 @@ import lombok.Getter;
 @JsonRootName(value = "resultado")
 public class ResultadoDTO {
 
+    /**
+     * Corresponde al código de respuesta.
+     */
     private final int codigo;
+    /**
+     * Corresponde la descripción de la respuesta.
+     */
     private final String descripcion;
+    /**
+     * Corresponde al valor de la respuesta.
+     */
     private final Object valor;
 
     public ResultadoDTO(HttpCode httpCode, Object valor) {

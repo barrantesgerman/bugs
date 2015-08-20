@@ -26,6 +26,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Representa un proyecto de desarrollo.
  *
  * @author Herman
  * @since 22/07/2015
@@ -37,10 +38,19 @@ import lombok.ToString;
 @Table(name = "proyecto")
 public class Proyecto extends ModeloBase implements Serializable {
 
+    /**
+     * Nombre del proyecto.
+     */
     @Column(name = "nombre")
     private String nombre;
+    /**
+     * Descripción del proyecto.
+     */
     @Column(name = "descripcion")
     private String descripcion;
+    /**
+     * Estado del proyecto.
+     */
     @Column(name = "estado")
     @Enumerated(EnumType.STRING)
     private EstadoProyecto estado;

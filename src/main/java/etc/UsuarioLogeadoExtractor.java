@@ -3,7 +3,7 @@ package etc;
 import ninja.Context;
 import ninja.params.ArgumentExtractor;
 
-public class LoggedInUserExtractor implements ArgumentExtractor<String> {
+public class UsuarioLogeadoExtractor implements ArgumentExtractor<String> {
 
     @Override
     public String extract(Context context) {

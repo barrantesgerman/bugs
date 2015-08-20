@@ -15,12 +15,16 @@
  */
 package controllers;
 
+import etc.UsuarioLogeado;
 import ninja.Result;
 import ninja.Results;
 
-public class ApplicationController {
+public class InicioController {
 
-    public Result index() {
+    public Result index(@UsuarioLogeado String usuario) {
+        if (usuario == null || usuario.trim().isEmpty()) {
+            return Results.redirect("/login");
+        }
         return Results.html();
     }
 }

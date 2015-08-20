@@ -21,6 +21,7 @@ import dtos.ArchivoDTO;
 import java.util.List;
 import javax.inject.Inject;
 import dtos.Resultados;
+import etc.UsuarioLogeado;
 import java.io.InputStream;
 import models.Archivo;
 import ninja.Context;
@@ -52,6 +53,7 @@ public class ArchivoApiController {
 
     public Result buscar(
             @PathParam("incidenciaId") Long incidenciaId,
+            @PathParam("modo") String modo,
             @PathParam("archivoId") Long archivoId) {
 
         Optional<Archivo> oArchivo = archivoDAO.buscar(incidenciaId, archivoId);
@@ -60,8 +62,8 @@ public class ArchivoApiController {
             return Results
                     .ok()
                     .doNotCacheContent()
-                    .addHeader("Content-Disposition", "inline; filename=\"" + archivo.getNombre() + "\"")
-                    .addHeader("Content-Length", "" + archivo.getContenido().length)
+                    .addHeader("Content-Disposition", modo + "; filename=\"" + archivo.getNombre() + "\"")
+                    .addHeader("Content-Length", String.valueOf(archivo.getContenido().length))
                     .addHeader("Content-Transfer-Encoding", "binary")
                     .addHeader("Content-Description", "File Transfer")
                     .contentType(archivo.getMimeType())
@@ -72,6 +74,7 @@ public class ArchivoApiController {
 
     public Result crear(
             @PathParam("incidenciaId") Long incidenciaId,
+            @UsuarioLogeado String usuario,
             Context context) throws Exception {
 
         if (context.isMultipart()) {
@@ -91,6 +94,7 @@ public class ArchivoApiController {
                     Archivo archivo = new Archivo();
                     archivo.setNombre(nombre);
                     archivo.setMimeType(mimeType);
+                    archivo.setUsuario(usuario);
                     archivo.setContenido(IOUtils.toByteArray(stream));
 
                     boolean resultado = archivoDAO.crear(incidenciaId, archivo);

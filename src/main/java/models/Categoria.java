@@ -25,6 +25,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * Corresponde a la categoría en la que se clasifica una incidencia. Cada
+ * proyecto cuenta con un catálogo de categorías.
  *
  * @author Herman
  * @since 22/07/2015
@@ -36,9 +38,15 @@ import lombok.ToString;
 @Table(name = "categoria")
 public class Categoria extends ModeloBase implements Serializable {
 
+    /**
+     * ID del proyecto a la que esta relacionada la categoría.
+     */
     @JsonIgnore
     @Column(name = "proyecto_id")
     private long proyectoId;
+    /**
+     * Descripción de la categoría.
+     */
     @Column(name = "descripcion")
     private String descripcion;
 

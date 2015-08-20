@@ -23,6 +23,8 @@ import dtos.Resultados;
 import models.Nota;
 import ninja.Result;
 import ninja.params.PathParam;
+import ninja.validation.JSR303Validation;
+import ninja.validation.Validation;
 
 /**
  *
@@ -56,7 +58,12 @@ public class NotaApiController {
 
     public Result crear(
             @PathParam("incidenciaId") Long incidenciaId,
-            Nota nota) {
+            @JSR303Validation Nota nota,
+            Validation validation) {
+        
+        if (validation.hasViolations()) {
+            return Resultados.validation(validation);
+        }
 
         Optional<Nota> resultado = notaDAO.crear(incidenciaId, nota);
         if (resultado.isPresent()) {
@@ -68,7 +75,12 @@ public class NotaApiController {
     public Result editar(
             @PathParam("incidenciaId") Long incidenciaId,
             @PathParam("notaId") Long notaId,
-            Nota nota) {
+            @JSR303Validation Nota nota,
+            Validation validation) {
+
+        if (validation.hasViolations()) {
+            return Resultados.validation(validation);
+        }
 
         boolean resultado = notaDAO.editar(incidenciaId, notaId, nota);
         if (resultado) {

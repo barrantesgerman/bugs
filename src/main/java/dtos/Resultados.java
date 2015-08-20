@@ -16,8 +16,12 @@
 package dtos;
 
 import com.google.common.base.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import ninja.Result;
 import ninja.Results;
+import ninja.validation.FieldViolation;
+import ninja.validation.Validation;
 
 /**
  *
@@ -45,6 +49,16 @@ public class Resultados {
                 .fallbackContentType(Result.APPLICATION_JSON)
                 .render(new ResultadoDTO(HttpCode.OK, object));
     }
+    
+    public static Result ok(List<?> lista, PaginaDTO pagina) {
+        return Results
+                .ok()
+                .supportedContentTypes(
+                        Result.APPLICATION_JSON,
+                        Result.APPLICATION_XML)
+                .fallbackContentType(Result.APPLICATION_JSON)
+                .render(new ResultadoPaginaDTO(HttpCode.OK, lista, pagina));
+    }
 
     public static Result created(Object object) {
         return Results
@@ -64,6 +78,31 @@ public class Resultados {
                         Result.APPLICATION_XML)
                 .fallbackContentType(Result.APPLICATION_JSON)
                 .render(new ResultadoDTO(HttpCode.NOT_FOUND, false));
+    }
+    
+    public static Result validation(Validation validation) {
+        
+        List<ErrorValidationDTO> errores = new ArrayList<>();
+        for(FieldViolation violation : validation.getBeanViolations()){
+            errores.add(
+                    new ErrorValidationDTO(
+                            violation.field,
+                            violation.constraintViolation.getMessageKey()));
+        }
+        for(FieldViolation violation : validation.getFieldViolations()){
+            errores.add(
+                    new ErrorValidationDTO(
+                            violation.field,
+                            violation.constraintViolation.getMessageKey()));
+        }
+        
+        return Results
+                .badRequest()
+                .supportedContentTypes(
+                        Result.APPLICATION_JSON,
+                        Result.APPLICATION_XML)
+                .fallbackContentType(Result.APPLICATION_JSON)
+                .render(new ResultadoDTO(HttpCode.BAD_REQUEST, errores));
     }
 
 }
