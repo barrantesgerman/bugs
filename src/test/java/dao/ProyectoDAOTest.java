@@ -53,7 +53,7 @@ public class ProyectoDAOTest {
 
         assertTrue(creado.isPresent());
 
-        assertNotEquals(creado.get().getId(), 0);
+        assertNotEquals(creado.get().getId(), 0L);
         proyectoId = creado.get().getId();
 
         assertEquals(creado.get().getNombre(), "Proyecto Prueba 1");
@@ -67,7 +67,7 @@ public class ProyectoDAOTest {
         Optional<Proyecto> buscado = proyectoDAO.buscar(proyectoId);
 
         assertTrue(buscado.isPresent());
-        assertEquals(buscado.get().getId(), 1L);
+        assertEquals(buscado.get().getId(), proyectoId);
         assertEquals(buscado.get().getNombre(), "Proyecto Prueba 1");
         assertEquals(buscado.get().getDescripcion(), "Descripción Proyecto Prueba 1");
         assertEquals(buscado.get().getEstado(), EstadoProyecto.EN_DESARROLLO);
@@ -84,7 +84,7 @@ public class ProyectoDAOTest {
         boolean editado = proyectoDAO.editar(proyectoId, buscado);
         assertTrue(editado);
 
-        buscado = proyectoDAO.buscar(1L).get();
+        buscado = proyectoDAO.buscar(proyectoId).get();
         assertEquals(buscado.getNombre(), "Proyecto 1");
         assertEquals(buscado.getDescripcion(), "Descripción Proyecto 1");
         assertEquals(buscado.getEstado(), EstadoProyecto.OBSOLETO);

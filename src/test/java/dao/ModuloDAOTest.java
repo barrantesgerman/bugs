@@ -44,6 +44,7 @@ public class ModuloDAOTest {
     private ProyectoDAO proyectoDAO;
 
     private static long proyectoId;
+    private static long moduloId;
 
     @Test
     public void test0setup() {
@@ -66,30 +67,33 @@ public class ModuloDAOTest {
         Optional<Modulo> creado = moduloDAO.crear(proyectoId, modulo);
 
         assertTrue(creado.isPresent());
-        assertEquals(creado.get().getId(), 1L);
+        
+        assertNotEquals(creado.get().getId(), 0L);
+        moduloId = creado.get().getId();
+        
         assertEquals(creado.get().getNombre(), "Módulo Prueba 1");
     }
 
     @Test
     public void test2Buscar() {
         System.out.println("*** test2Buscar ***");
-        Optional<Modulo> buscado = moduloDAO.buscar(proyectoId, 1L);
+        Optional<Modulo> buscado = moduloDAO.buscar(proyectoId, moduloId);
 
         assertTrue(buscado.isPresent());
-        assertEquals(buscado.get().getId(), 1L);
+        assertEquals(buscado.get().getId(), moduloId);
         assertEquals(buscado.get().getNombre(), "Módulo Prueba 1");
     }
 
     @Test
     public void test3Editar() {
         System.out.println("*** test3Editar ***");
-        Modulo buscado = moduloDAO.buscar(proyectoId, 1L).get();
+        Modulo buscado = moduloDAO.buscar(proyectoId, moduloId).get();
         buscado.setNombre("Módulo 1");
 
         boolean editado = moduloDAO.editar(proyectoId, buscado.getId(), buscado);
         assertTrue(editado);
 
-        buscado = moduloDAO.buscar(proyectoId, 1L).get();
+        buscado = moduloDAO.buscar(proyectoId, moduloId).get();
         assertEquals(buscado.getNombre(), "Módulo 1");
     }
 
@@ -104,9 +108,9 @@ public class ModuloDAOTest {
     @Test
     public void test5Eliminar() {
         System.out.println("*** test5Eliminar ***");
-        boolean eliminado = moduloDAO.eliminar(proyectoId, 1L);
+        boolean eliminado = moduloDAO.eliminar(proyectoId, moduloId);
         assertTrue(eliminado);
-        Optional<Modulo> buscado = moduloDAO.buscar(proyectoId, 1L);
+        Optional<Modulo> buscado = moduloDAO.buscar(proyectoId, moduloId);
         assertFalse(buscado.isPresent());
         List<Modulo> buscados = moduloDAO.listar(proyectoId);
         assertTrue(buscados.isEmpty());

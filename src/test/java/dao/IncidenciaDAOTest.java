@@ -57,6 +57,7 @@ public class IncidenciaDAOTest {
     private static long proyectoId;
     private static long moduloId;
     private static long categoriaId;
+    private static long incidenciaId;
 
     @Test
     public void test0setup() {
@@ -97,7 +98,10 @@ public class IncidenciaDAOTest {
         Optional<Incidencia> creado = incidenciaDAO.crear("usuario.prueba1", incidencia);
 
         assertTrue(creado.isPresent());
-        assertEquals(creado.get().getId(), 1L);
+        
+        assertNotEquals(creado.get().getId(), 0L);
+        incidenciaId = creado.get().getId();
+        
         assertEquals(creado.get().getProyectoId(), proyectoId);
         assertEquals(creado.get().getModuloId(), moduloId);
         assertEquals(creado.get().getCategoriaId(), categoriaId);
@@ -114,10 +118,10 @@ public class IncidenciaDAOTest {
     @Test
     public void test2Buscar() {
         System.out.println("*** test2Buscar ***");
-        Optional<Incidencia> buscado = incidenciaDAO.buscar(1L);
+        Optional<Incidencia> buscado = incidenciaDAO.buscar(incidenciaId);
 
         assertTrue(buscado.isPresent());
-        assertEquals(buscado.get().getId(), 1L);
+        assertEquals(buscado.get().getId(), incidenciaId);
         assertEquals(buscado.get().getProyectoId(), proyectoId);
         assertEquals(buscado.get().getModuloId(), moduloId);
         assertEquals(buscado.get().getCategoriaId(), categoriaId);
@@ -134,7 +138,7 @@ public class IncidenciaDAOTest {
     @Test
     public void test3Editar() {
         System.out.println("*** test3Editar ***");
-        Incidencia buscado = incidenciaDAO.buscar(1L).get();
+        Incidencia buscado = incidenciaDAO.buscar(incidenciaId).get();
         buscado.setEstado(EstadoIncidencia.ACEPTADA);
         buscado.setPrioridad(Prioridad.ALTA);
         buscado.setReproducibilidad(Reproducibilidad.ALEATORIO);
@@ -158,9 +162,9 @@ public class IncidenciaDAOTest {
     @Test
     public void test4Eliminar() {
         System.out.println("*** test4Eliminar ***");
-        boolean eliminado = incidenciaDAO.eliminar(1L);
+        boolean eliminado = incidenciaDAO.eliminar(incidenciaId);
         assertTrue(eliminado);
-        Optional<Incidencia> buscado = incidenciaDAO.buscar(1L);
+        Optional<Incidencia> buscado = incidenciaDAO.buscar(incidenciaId);
         assertFalse(buscado.isPresent());
     }
 }

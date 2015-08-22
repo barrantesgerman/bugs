@@ -44,6 +44,7 @@ public class CategoriaDAOTest {
     private ProyectoDAO proyectoDAO;
 
     private static long proyectoId;
+    private static long categoriaId;
 
     @Test
     public void test0setup() {
@@ -66,30 +67,33 @@ public class CategoriaDAOTest {
         Optional<Categoria> creado = categoriaDAO.crear(proyectoId, categoria);
 
         assertTrue(creado.isPresent());
-        assertEquals(creado.get().getId(), 1L);
+        
+        assertNotEquals(creado.get().getId(), 0L);
+        categoriaId = creado.get().getId();
+        
         assertEquals(creado.get().getDescripcion(), "Categoría Prueba 1");
     }
 
     @Test
     public void test2Buscar() {
         System.out.println("*** test2Buscar ***");
-        Optional<Categoria> buscado = categoriaDAO.buscar(proyectoId, 1L);
+        Optional<Categoria> buscado = categoriaDAO.buscar(proyectoId, categoriaId);
 
         assertTrue(buscado.isPresent());
-        assertEquals(buscado.get().getId(), 1L);
+        assertEquals(buscado.get().getId(), categoriaId);
         assertEquals(buscado.get().getDescripcion(), "Categoría Prueba 1");
     }
 
     @Test
     public void test3Editar() {
         System.out.println("*** test3Editar ***");
-        Categoria buscado = categoriaDAO.buscar(proyectoId, 1L).get();
+        Categoria buscado = categoriaDAO.buscar(proyectoId, categoriaId).get();
         buscado.setDescripcion("Categoría 1");
 
         boolean editado = categoriaDAO.editar(proyectoId, buscado.getId(), buscado);
         assertTrue(editado);
 
-        buscado = categoriaDAO.buscar(proyectoId, 1L).get();
+        buscado = categoriaDAO.buscar(proyectoId, categoriaId).get();
         assertEquals(buscado.getDescripcion(), "Categoría 1");
     }
 
@@ -104,9 +108,9 @@ public class CategoriaDAOTest {
     @Test
     public void test5Eliminar() {
         System.out.println("*** test5Eliminar ***");
-        boolean eliminado = categoriaDAO.eliminar(proyectoId, 1L);
+        boolean eliminado = categoriaDAO.eliminar(proyectoId, categoriaId);
         assertTrue(eliminado);
-        Optional<Categoria> buscado = categoriaDAO.buscar(proyectoId, 1L);
+        Optional<Categoria> buscado = categoriaDAO.buscar(proyectoId, categoriaId);
         assertFalse(buscado.isPresent());
         List<Categoria> buscados = categoriaDAO.listar(proyectoId);
         assertTrue(buscados.isEmpty());
