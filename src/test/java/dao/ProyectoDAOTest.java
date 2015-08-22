@@ -88,9 +88,16 @@ public class ProyectoDAOTest {
     @Test
     public void test4Listar() {
         System.out.println("*** test4Listar ***");
+
+        Proyecto proyecto = new Proyecto();
+        proyecto.setNombre("Proyecto Prueba 2");
+        proyecto.setDescripcion("Descripción Proyecto Prueba 2");
+        proyecto.setEstado(EstadoProyecto.EN_DESARROLLO);
+
+        proyectoDAO.crear(proyecto);
         List<Proyecto> buscados = proyectoDAO.listar();
         assertFalse(buscados.isEmpty());
-        assertEquals(buscados.size(), 1);
+        assertEquals(buscados.size(), 2);
     }
 
     @Test
@@ -101,6 +108,7 @@ public class ProyectoDAOTest {
         Optional<Proyecto> buscado = proyectoDAO.buscar(1L);
         assertFalse(buscado.isPresent());
         List<Proyecto> buscados = proyectoDAO.listar();
-        assertTrue(buscados.isEmpty());
+        assertFalse(buscados.isEmpty());
+        assertEquals(buscados.size(), 1);
     }
 }
