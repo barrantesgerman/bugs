@@ -39,6 +39,8 @@ public class ProyectoDAOTest {
     @Inject
     private ProyectoDAO proyectoDAO;
 
+    private static long proyectoId;
+
     @Test
     public void test1Crear() {
         System.out.println("*** test1Crear ***");
@@ -50,7 +52,10 @@ public class ProyectoDAOTest {
         Optional<Proyecto> creado = proyectoDAO.crear(proyecto);
 
         assertTrue(creado.isPresent());
-        assertEquals(creado.get().getId(), 1L);
+
+        assertNotEquals(creado.get().getId(), 0);
+        proyectoId = creado.get().getId();
+
         assertEquals(creado.get().getNombre(), "Proyecto Prueba 1");
         assertEquals(creado.get().getDescripcion(), "Descripción Proyecto Prueba 1");
         assertEquals(creado.get().getEstado(), EstadoProyecto.EN_DESARROLLO);
@@ -59,7 +64,7 @@ public class ProyectoDAOTest {
     @Test
     public void test2Buscar() {
         System.out.println("*** test2Buscar ***");
-        Optional<Proyecto> buscado = proyectoDAO.buscar(1L);
+        Optional<Proyecto> buscado = proyectoDAO.buscar(proyectoId);
 
         assertTrue(buscado.isPresent());
         assertEquals(buscado.get().getId(), 1L);
@@ -71,12 +76,12 @@ public class ProyectoDAOTest {
     @Test
     public void test3Editar() {
         System.out.println("*** test3Editar ***");
-        Proyecto buscado = proyectoDAO.buscar(1L).get();
+        Proyecto buscado = proyectoDAO.buscar(proyectoId).get();
         buscado.setNombre("Proyecto 1");
         buscado.setDescripcion("Descripción Proyecto 1");
         buscado.setEstado(EstadoProyecto.OBSOLETO);
 
-        boolean editado = proyectoDAO.editar(buscado.getId(), buscado);
+        boolean editado = proyectoDAO.editar(proyectoId, buscado);
         assertTrue(editado);
 
         buscado = proyectoDAO.buscar(1L).get();
@@ -103,9 +108,9 @@ public class ProyectoDAOTest {
     @Test
     public void test5Eliminar() {
         System.out.println("*** test5Eliminar ***");
-        boolean eliminado = proyectoDAO.eliminar(1L);
+        boolean eliminado = proyectoDAO.eliminar(proyectoId);
         assertTrue(eliminado);
-        Optional<Proyecto> buscado = proyectoDAO.buscar(1L);
+        Optional<Proyecto> buscado = proyectoDAO.buscar(proyectoId);
         assertFalse(buscado.isPresent());
         List<Proyecto> buscados = proyectoDAO.listar();
         assertFalse(buscados.isEmpty());
