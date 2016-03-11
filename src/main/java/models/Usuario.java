@@ -30,8 +30,8 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"usuario"})
-@ToString(callSuper = true, exclude = {"clave"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "usuario")
 public class Usuario extends ModeloBase implements Serializable {

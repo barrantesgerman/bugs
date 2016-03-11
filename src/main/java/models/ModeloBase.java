@@ -23,8 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 /**
@@ -33,10 +32,9 @@ import lombok.ToString;
  * @author Herman
  * @since 22/07/2015
  */
-@Getter
-@Setter
-@ToString
+@Data
 @EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 @MappedSuperclass
 public abstract class ModeloBase implements Serializable {
 

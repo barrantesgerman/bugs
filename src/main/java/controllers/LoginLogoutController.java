@@ -15,9 +15,11 @@
  */
 package controllers;
 
+import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import dao.UsuarioDAO;
+import models.Usuario;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
@@ -30,7 +32,7 @@ import ninja.validation.Validation;
 public class LoginLogoutController {
 
     @Inject
-    private UsuarioDAO userDao;
+    private UsuarioDAO usuarioDAO;
 
     public Result login(Context context) {
         return Results.html();
@@ -43,9 +45,10 @@ public class LoginLogoutController {
             Validation validation) {
         if (validation.hasViolations()) {
         }
-        boolean isUserNameAndPasswordValid = this.userDao.isUserAndPasswordValid(usuario, clave);
-        if (isUserNameAndPasswordValid) {
-            context.getSession().put("username", usuario);
+        Optional<Usuario> oUsuario = usuarioDAO.obtenerUsuario(usuario, clave);
+        if (oUsuario.isPresent()) {
+            String usuarioId = String.valueOf(oUsuario.get().getId());
+            context.getSession().put("usuarioId", usuarioId);
             context.getFlashScope().success("login.loginSuccessful");
 
             return Results.redirect("/");

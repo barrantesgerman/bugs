@@ -32,8 +32,8 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"nombre"})
-@ToString(callSuper = true, exclude = {"descripcion"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "proyecto")
 public class Proyecto extends ModeloBase implements Serializable {

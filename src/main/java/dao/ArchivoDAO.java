@@ -50,7 +50,7 @@ public class ArchivoDAO {
                         Projections.constructor(
                                 ArchivoDTO.class,
                                 qa.id,
-                                qa.usuario,
+                                qa.usuarioId,
                                 qa.nombre,
                                 qa.mimeType,
                                 qa.fecha))

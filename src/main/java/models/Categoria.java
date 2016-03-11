@@ -32,7 +32,7 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"proyectoId"})
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
 @Table(name = "categoria")

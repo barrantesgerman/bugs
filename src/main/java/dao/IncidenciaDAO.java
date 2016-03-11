@@ -51,19 +51,19 @@ public class IncidenciaDAO {
     }
 
     @Transactional
-    public Optional<Incidencia> crear(String usuario, Incidencia incidencia) {
+    public Optional<Incidencia> crear(Long usuarioId, Incidencia incidencia) {
         EntityManager em = entitiyManagerProvider.get();
         incidencia.setActivo(true);
         incidencia.setFechaCreacion(new Date());
         incidencia.setFechaActualizacion(new Date());
-        incidencia.setUsuarioCreacion(usuario);
-        incidencia.setUsuarioActualizacion(usuario);
+        incidencia.setUsuarioCreacionId(usuarioId);
+        incidencia.setUsuarioActualizacionId(usuarioId);
         em.persist(incidencia);
         return Optional.of(incidencia);
     }
 
     @Transactional
-    public boolean editar(long id, String usuario, Incidencia incidencia) {
+    public boolean editar(long id, Long usuarioId, Incidencia incidencia) {
         QIncidencia qi = QIncidencia.incidencia;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
@@ -80,7 +80,7 @@ public class IncidenciaDAO {
                 .set(qi.pasos, incidencia.getPasos())
                 .set(qi.informacionAdicional, incidencia.getInformacionAdicional())
                 .set(qi.fechaActualizacion, new Date())
-                .set(qi.usuarioActualizacion, usuario)
+                .set(qi.usuarioActualizacionId, usuarioId)
                 .where(
                         qi.id.eq(id),
                         qi.activo.isTrue())

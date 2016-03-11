@@ -15,14 +15,14 @@
  */
 package controllers;
 
-import etc.UsuarioLogeado;
+import etc.UsuarioId;
 import ninja.Result;
 import ninja.Results;
 
 public class InicioController {
 
-    public Result index(@UsuarioLogeado String usuario) {
-        if (usuario == null || usuario.trim().isEmpty()) {
+    public Result index(@UsuarioId Long usuario) {
+        if (usuario == null) {
             return Results.redirect("/login");
         }
         return Results.html();

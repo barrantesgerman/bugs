@@ -37,8 +37,8 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"incidenciaId"})
-@ToString(callSuper = true, exclude = {"nota"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "nota")
 public class Nota extends ModeloBase implements Serializable {
@@ -52,8 +52,8 @@ public class Nota extends ModeloBase implements Serializable {
     /**
      * Usuario que creó la nota.
      */
-    @Column(name = "usuario")
-    private String usuario;
+    @Column(name = "usuario_id")
+    private long usuarioId;
     /**
      * Fecha en que fue creada la nota.
      */

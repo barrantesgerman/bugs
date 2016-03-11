@@ -58,6 +58,7 @@ public class IncidenciaDAOTest {
     private static long moduloId;
     private static long categoriaId;
     private static long incidenciaId;
+    private static long usuarioId = 1L;
 
     @Test
     public void test0setup() {
@@ -95,7 +96,7 @@ public class IncidenciaDAOTest {
         incidencia.setResumen("Incidencia Prueba 1");
         incidencia.setDescripcion("Descripción Incidencia Prueba 1");
 
-        Optional<Incidencia> creado = incidenciaDAO.crear("usuario.prueba1", incidencia);
+        Optional<Incidencia> creado = incidenciaDAO.crear(usuarioId, incidencia);
 
         assertTrue(creado.isPresent());
         
@@ -111,8 +112,8 @@ public class IncidenciaDAOTest {
         assertEquals(creado.get().getResolucion(), Resolucion.ABIERTA);
         assertEquals(creado.get().getResumen(), "Incidencia Prueba 1");
         assertEquals(creado.get().getDescripcion(), "Descripción Incidencia Prueba 1");
-        assertEquals(creado.get().getUsuarioCreacion(), "usuario.prueba1");
-        assertEquals(creado.get().getUsuarioActualizacion(), "usuario.prueba1");
+//        assertEquals(creado.get().getUsuarioCreacionId(), usuarioId);
+//        assertEquals(creado.get().getUsuarioActualizacionId(), usuarioId);
     }
 
     @Test
@@ -131,8 +132,8 @@ public class IncidenciaDAOTest {
         assertEquals(buscado.get().getResolucion(), Resolucion.ABIERTA);
         assertEquals(buscado.get().getResumen(), "Incidencia Prueba 1");
         assertEquals(buscado.get().getDescripcion(), "Descripción Incidencia Prueba 1");
-        assertEquals(buscado.get().getUsuarioCreacion(), "usuario.prueba1");
-        assertEquals(buscado.get().getUsuarioActualizacion(), "usuario.prueba1");
+//        assertEquals(buscado.get().getUsuarioCreacionId(), usuarioId);
+//        assertEquals(buscado.get().getUsuarioActualizacionId(), usuarioId);
     }
 
     @Test
@@ -146,7 +147,7 @@ public class IncidenciaDAOTest {
         buscado.setResumen("Incidencia 1");
         buscado.setDescripcion("Descripción Incidencia 1");
 
-        boolean editado = incidenciaDAO.editar(buscado.getId(), "usuario.prueba2", buscado);
+        boolean editado = incidenciaDAO.editar(buscado.getId(), usuarioId, buscado);
         assertTrue(editado);
 
         buscado = incidenciaDAO.buscar(1L).get();
@@ -156,7 +157,7 @@ public class IncidenciaDAOTest {
         assertEquals(buscado.getResolucion(), Resolucion.NO_REPRODUCIBLE);
         assertEquals(buscado.getResumen(), "Incidencia 1");
         assertEquals(buscado.getDescripcion(), "Descripción Incidencia 1");
-        assertEquals(buscado.getUsuarioActualizacion(), "usuario.prueba2");
+//        assertEquals(buscado.getUsuarioActualizacionId(), usuarioId);
     }
 
     @Test

@@ -16,7 +16,6 @@
 package dao;
 
 import com.google.common.base.Optional;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -37,7 +36,7 @@ public class UsuarioDAO {
     @UnitOfWork
     public Optional<Usuario> obtenerUsuario(String nombreUsuario, String clave) {
         if (nombreUsuario != null && clave != null) {
-            QUsuario qu = new QUsuario("u");
+            QUsuario qu = QUsuario.usuario1;
             JPAQueryFactory query = jpaQueryFactoryProvider.get();
             return Optional.fromNullable(query
                     .select(qu)
@@ -50,21 +49,5 @@ public class UsuarioDAO {
         }
         return Optional.absent();
     }
-
-    @UnitOfWork
-    public boolean isUserAndPasswordValid(String usuario, String clave) {
-        if (usuario != null && clave != null) {
-            QUsuario qu = new QUsuario("u");
-            JPAQueryFactory query = jpaQueryFactoryProvider.get();
-            return query
-                    .select(qu.count())
-                    .from(qu)
-                    .where(
-                            qu.usuario.eq(usuario),
-                            qu.clave.eq(clave),
-                            qu.activo.isTrue())
-                    .fetchOne() > 0L;
-        }
-        return false;
-    }
+    
 }

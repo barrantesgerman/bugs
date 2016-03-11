@@ -37,8 +37,8 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"incidenciaId"})
-@ToString(callSuper = true, exclude = {"contenido"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "archivo")
 public class Archivo extends ModeloBase implements Serializable {
@@ -52,8 +52,8 @@ public class Archivo extends ModeloBase implements Serializable {
     /**
      * Usuario que subió el archivo.
      */
-    @Column(name = "usuario")
-    private String usuario;
+    @Column(name = "usuario_id")
+    private long usuarioId;
     /**
      * Nombre del archivo.
      */

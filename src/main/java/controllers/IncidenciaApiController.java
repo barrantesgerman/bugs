@@ -27,7 +27,7 @@ import models.Incidencia;
 import dtos.Resultados;
 import etc.FiltroIncidencia;
 import etc.Pagina;
-import etc.UsuarioLogeado;
+import etc.UsuarioId;
 import ninja.Result;
 import ninja.params.PathParam;
 
@@ -69,9 +69,9 @@ public class IncidenciaApiController {
         return Resultados.notFound();
     }
 
-    public Result crear(@UsuarioLogeado String usuario, Incidencia incidencia) {
+    public Result crear(@UsuarioId Long usuarioId, Incidencia incidencia) {
 
-        Optional<Incidencia> resultado = incidenciaDAO.crear(usuario, incidencia);
+        Optional<Incidencia> resultado = incidenciaDAO.crear(usuarioId, incidencia);
         if (resultado.isPresent()) {
             return Resultados.created(resultado.get());
         }
@@ -80,10 +80,10 @@ public class IncidenciaApiController {
 
     public Result editar(
             @PathParam("id") Long id,
-            @UsuarioLogeado String usuario,
+            @UsuarioId Long usuarioId,
             Incidencia incidencia) {
 
-        boolean resultado = incidenciaDAO.editar(id, usuario, incidencia);
+        boolean resultado = incidenciaDAO.editar(id, usuarioId, incidencia);
         if (resultado) {
             return Resultados.ok();
         }

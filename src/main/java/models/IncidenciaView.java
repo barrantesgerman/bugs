@@ -36,8 +36,8 @@ import lombok.ToString;
  * @since 19/08/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId"})
-@ToString(callSuper = true, of = {"proyectoId", "moduloId", "categoriaId"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "incidencia_view")
 public class IncidenciaView extends ModeloBase implements Serializable {
@@ -126,9 +126,9 @@ public class IncidenciaView extends ModeloBase implements Serializable {
     /**
      * Fecha en la que se empezó a atender la incidencia.
      */
-    @Column(name = "fecha_atension")
+    @Column(name = "fecha_atencion")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaAtension;
+    private Date fechaAtencion;
     /**
      * Fecha en la que se resolvió la incidencia.
      */
@@ -153,36 +153,36 @@ public class IncidenciaView extends ModeloBase implements Serializable {
     /**
      * Usuario que creó la incidencia.
      */
-    @Column(name = "usuario_creacion")
-    private String usuarioCreacion;
+    @Column(name = "usuario_creacion_id")
+    private Long usuarioCreacionId;
     /**
      * Usuario que actualizó por última vez la incidencia.
      */
-    @Column(name = "usuario_actualizacion")
-    private String usuarioActualizacion;
+    @Column(name = "usuario_actualizacion_id")
+    private Long usuarioActualizacionId;
     /**
      * Usuario que se le asignó la incidencia para atenderla.
      */
-    @Column(name = "usuario_asignacion")
-    private String usuarioAsignacion;
+    @Column(name = "usuario_asignacion_id")
+    private Long usuarioAsignacionId;
     /**
      * Usuario que se encuentra atendiendo la incidencia.
      */
-    @Column(name = "usuario_atension")
-    private String usuarioAtension;
+    @Column(name = "usuario_atencion_id")
+    private Long usuarioAtencionId;
     /**
      * Usuario que resolvió la incidencia.
      */
-    @Column(name = "usuario_resolucion")
-    private String usuarioResolucion;
+    @Column(name = "usuario_resolucion_id")
+    private Long usuarioResolucionId;
     /**
      * Usuario que revisó la incidencia.
      */
-    @Column(name = "usuario_revision")
-    private String usuarioRevision;
+    @Column(name = "usuario_revision_id")
+    private Long usuarioRevisionId;
     /**
      * Usuario que cerró la incidencia.
      */
-    @Column(name = "usuario_cierre")
-    private String usuarioCierre;
+    @Column(name = "usuario_cierre_id")
+    private Long usuarioCierreId;
 }

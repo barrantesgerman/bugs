@@ -90,5 +90,5 @@ public class IncidenciaViewDTO {
     /**
      * Usuario que actualizó por última vez la incidencia.
      */
-    private String usuarioActualizacion;
+    private Long usuarioActualizacionId;
 }

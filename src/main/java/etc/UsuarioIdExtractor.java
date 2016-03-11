@@ -3,26 +3,21 @@ package etc;
 import ninja.Context;
 import ninja.params.ArgumentExtractor;
 
-public class UsuarioLogeadoExtractor implements ArgumentExtractor<String> {
+public class UsuarioIdExtractor implements ArgumentExtractor<Long> {
 
     @Override
-    public String extract(Context context) {
-
+    public Long extract(Context context) {
         // if we got no cookies we break:
         if (context.getSession() != null) {
-
-            String username = context.getSession().get("username");
-
-            return username;
-
+            Long usuarioId = Long.valueOf(context.getSession().get("usuarioId"));
+            return usuarioId;
         }
-
         return null;
     }
 
     @Override
-    public Class<String> getExtractedType() {
-        return String.class;
+    public Class<Long> getExtractedType() {
+        return Long.class;
     }
 
     @Override

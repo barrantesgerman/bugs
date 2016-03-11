@@ -34,8 +34,8 @@ import lombok.ToString;
  * @since 22/07/2015
  */
 @Data
-@EqualsAndHashCode(callSuper = true, of = {"incidenciaId"})
-@ToString(callSuper = true, exclude = {"antes", "ahora"})
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
 @Table(name = "historico")
 public class Historico extends ModeloBase implements Serializable {
@@ -48,8 +48,8 @@ public class Historico extends ModeloBase implements Serializable {
     /**
      * Usuario que realizó la acción.
      */
-    @Column(name = "usuario")
-    private String usuario;
+    @Column(name = "usuario_id")
+    private long usuarioId;
     /**
      * Campo afectado.
      */

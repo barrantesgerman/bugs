@@ -62,7 +62,7 @@ public class IncidenciaViewDAO {
                                 qi.resolucion,
                                 qi.resumen,
                                 qi.fechaActualizacion,
-                                qi.usuarioActualizacion))
+                                qi.usuarioActualizacionId))
                 .from(qi)
                 .where(qi.activo.isTrue());
         if (filtro.getProyectoId().isPresent()) {

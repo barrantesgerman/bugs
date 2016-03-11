@@ -82,7 +82,6 @@ public class NotaDAO {
         return query
                 .update(qn)
                 .set(qn.nota, nota.getNota())
-                .set(qn.usuario, nota.getUsuario())
                 .set(qn.fecha, nota.getFecha())
                 .where(
                         qn.id.eq(notaId),
