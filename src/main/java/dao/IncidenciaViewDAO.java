@@ -20,14 +20,14 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.FiltroIncidenciaDTO;
-import dtos.IncidenciaViewDTO;
+import dtos.IncidenciaDTO;
 import dtos.PaginaDTO;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import models.EstadoIncidencia;
 import models.Prioridad;
-import models.QIncidenciaView;
+import models.QXIncidenciaCompleto;
 import models.Reproducibilidad;
 import models.Resolucion;
 import ninja.jpa.UnitOfWork;
@@ -42,37 +42,41 @@ public class IncidenciaViewDAO {
     @Inject
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
 
-    private JPAQuery<IncidenciaViewDTO> filtrar(FiltroIncidenciaDTO filtro) {
-        QIncidenciaView qi = QIncidenciaView.incidenciaView;
+    private JPAQuery<IncidenciaDTO> filtrar(FiltroIncidenciaDTO filtro) {
+        QXIncidenciaCompleto qi = QXIncidenciaCompleto.xIncidenciaCompleto;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
-        JPAQuery<IncidenciaViewDTO> consulta = query
+        JPAQuery<IncidenciaDTO> consulta = query
                 .select(
                         Projections.constructor(
-                                IncidenciaViewDTO.class,
+                                IncidenciaDTO.class,
                                 qi.id,
-                                qi.proyectoId,
-                                qi.proyectoNombre,
-                                qi.moduloId,
-                                qi.moduloNombre,
-                                qi.categoriaId,
-                                qi.categoriaDescripcion,
+                                qi.proyecto.id,
+                                qi.proyecto.nombre,
+                                qi.modulo.id,
+                                qi.modulo.nombre,
+                                qi.categoria.id,
+                                qi.categoria.descripcion,
                                 qi.estado,
                                 qi.prioridad,
                                 qi.reproducibilidad,
                                 qi.resolucion,
                                 qi.resumen,
                                 qi.fechaActualizacion,
-                                qi.usuarioActualizacionId))
+                                qi.usuarioActualizacion.usuario))
                 .from(qi)
+                .innerJoin(qi.proyecto)
+                .leftJoin(qi.modulo)
+                .innerJoin(qi.categoria)
+                .innerJoin(qi.usuarioActualizacion)
                 .where(qi.activo.isTrue());
         if (filtro.getProyectoId().isPresent()) {
-            consulta.where(qi.proyectoId.eq(filtro.getProyectoId().get()));
+            consulta.where(qi.proyecto.id.eq(filtro.getProyectoId().get()));
         }
         if (filtro.getModuloId().isPresent()) {
-            consulta.where(qi.moduloId.eq(filtro.getModuloId().get()));
+            consulta.where(qi.modulo.id.eq(filtro.getModuloId().get()));
         }
         if (filtro.getCategoriaId().isPresent()) {
-            consulta.where(qi.categoriaId.eq(filtro.getCategoriaId().get()));
+            consulta.where(qi.categoria.id.eq(filtro.getCategoriaId().get()));
         }
         if (!filtro.getEstado().isEmpty()) {
             BooleanBuilder builder = new BooleanBuilder();
@@ -111,16 +115,16 @@ public class IncidenciaViewDAO {
     @UnitOfWork
     public long cantidad(FiltroIncidenciaDTO filtro) {
 
-        JPAQuery<IncidenciaViewDTO> consulta = filtrar(filtro);
+        JPAQuery<IncidenciaDTO> consulta = filtrar(filtro);
         return consulta.fetchCount();
     }
 
     @UnitOfWork
-    public List<IncidenciaViewDTO> listar(
+    public List<IncidenciaDTO> listar(
             FiltroIncidenciaDTO filtro,
             PaginaDTO pagina) {
 
-        JPAQuery<IncidenciaViewDTO> consulta = filtrar(filtro);
+        JPAQuery<IncidenciaDTO> consulta = filtrar(filtro);
 
         consulta.limit(pagina.getTamano());
         consulta.offset(pagina.getPagina());

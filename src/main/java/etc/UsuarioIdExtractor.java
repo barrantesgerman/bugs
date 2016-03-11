@@ -9,7 +9,11 @@ public class UsuarioIdExtractor implements ArgumentExtractor<Long> {
     public Long extract(Context context) {
         // if we got no cookies we break:
         if (context.getSession() != null) {
-            Long usuarioId = Long.valueOf(context.getSession().get("usuarioId"));
+            String valor = context.getSession().get("usuarioId");
+            if(valor == null) {
+                return null;
+            }
+            Long usuarioId = Long.valueOf(valor);
             return usuarioId;
         }
         return null;

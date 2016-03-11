@@ -27,6 +27,7 @@ import javax.inject.Provider;
 import javax.persistence.EntityManager;
 import models.Archivo;
 import models.QArchivo;
+import models.QXArchivoUsuario;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -43,14 +44,14 @@ public class ArchivoDAO {
 
     @UnitOfWork
     public List<ArchivoDTO> listar(long incidenciaId) {
-        QArchivo qa = QArchivo.archivo;
+        QXArchivoUsuario qa = QXArchivoUsuario.xArchivoUsuario;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
                 .select(
                         Projections.constructor(
                                 ArchivoDTO.class,
                                 qa.id,
-                                qa.usuarioId,
+                                qa.usuario.usuario,
                                 qa.nombre,
                                 qa.mimeType,
                                 qa.fecha))

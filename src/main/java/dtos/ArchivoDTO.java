@@ -36,9 +36,9 @@ public class ArchivoDTO {
      */
     private final long id;
     /**
-     * Usuario que subió el archivo.
+     * Nombre del Usuario que subió el archivo.
      */
-    private final long usuarioId;
+    private final String usuario;
     /**
      * Nombre del archivo.
      */

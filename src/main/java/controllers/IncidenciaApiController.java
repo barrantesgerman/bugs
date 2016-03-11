@@ -19,7 +19,7 @@ import com.google.common.base.Optional;
 import dao.IncidenciaDAO;
 import dao.IncidenciaViewDAO;
 import dtos.FiltroIncidenciaDTO;
-import dtos.IncidenciaViewDTO;
+import dtos.IncidenciaDTO;
 import dtos.PaginaDTO;
 import java.util.List;
 import javax.inject.Inject;
@@ -48,7 +48,7 @@ public class IncidenciaApiController {
             @FiltroIncidencia FiltroIncidenciaDTO filtro,
             @Pagina PaginaDTO pagina) {
 
-        List<IncidenciaViewDTO> incidencias
+        List<IncidenciaDTO> incidencias
                 = incidenciaViewDAO.listar(filtro, pagina);
         Long total = incidenciaViewDAO.cantidad(filtro);
         pagina.setCantidad(incidencias.size());

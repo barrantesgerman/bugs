@@ -21,6 +21,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,50 +32,36 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Representa la vista de la incidencia, la cual facilita la obtención de la
- * información relacionada a la incidencia.
+ * Representa una incidencia.
  *
- * @author Herman Barrantes
- * @since 19/08/2015
+ * @author Herman
+ * @since 22/07/2015
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
-@Table(name = "incidencia_view")
-public class IncidenciaView extends ModeloBase implements Serializable {
+@Table(name = "incidencia")
+public class XIncidenciaCompleto extends ModeloBase implements Serializable {
 
     /**
-     * ID del proyecto a la que esta relacionada la incidencia.
+     * Proyecto a la que esta relacionada la incidencia.
      */
-    @Column(name = "proyecto_id")
-    private long proyectoId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "proyecto_id")
+    private Proyecto proyecto;
     /**
-     * Nombre del proyecto a la que esta relacionada la incidencia.
+     * Módulo a la que esta relacionada la incidencia, este campo es opcional.
      */
-    @Column(name = "proyecto_nombre")
-    private String proyectoNombre;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modulo_id")
+    private Modulo modulo;
     /**
-     * ID del módulo a la que esta relacionada la incidencia, este campo es
-     * opcional.
+     * Categoría a la que esta relacionada la incidencia.
      */
-    @Column(name = "modulo_id")
-    private long moduloId;
-    /**
-     * Nombre del módulo a la que esta relacionada la incidencia.
-     */
-    @Column(name = "modulo_nombre")
-    private String moduloNombre;
-    /**
-     * ID de la categoría a la que esta relacionada la incidencia.
-     */
-    @Column(name = "categoria_id")
-    private long categoriaId;
-    /**
-     * Descripción de la categoría a la que esta relacionada la incidencia.
-     */
-    @Column(name = "categoria_descripcion")
-    private String categoriaDescripcion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
     /**
      * Estado en el que se encuentra la incidencia.
      */
@@ -102,6 +91,21 @@ public class IncidenciaView extends ModeloBase implements Serializable {
      */
     @Column(name = "resumen")
     private String resumen;
+    /**
+     * Descripción detallada de lo que se trata la incidencia.
+     */
+    @Column(name = "descripcion")
+    private String descripcion;
+    /**
+     * Pasos a seguir para reproducir la incidencia.
+     */
+    @Column(name = "pasos")
+    private String pasos;
+    /**
+     * Información extra que puede ayudar a la resolución de la incidencia.
+     */
+    @Column(name = "informacion_adicional")
+    private String informacionAdicional;
     ////////////////////////////////////////////////////////////////////////////
     // Fechas de auditoría
     ////////////////////////////////////////////////////////////////////////////
@@ -153,36 +157,44 @@ public class IncidenciaView extends ModeloBase implements Serializable {
     /**
      * Usuario que creó la incidencia.
      */
-    @Column(name = "usuario_creacion_id")
-    private Long usuarioCreacionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_creacion_id")
+    private Usuario usuarioCreacion;
     /**
      * Usuario que actualizó por última vez la incidencia.
      */
-    @Column(name = "usuario_actualizacion_id")
-    private Long usuarioActualizacionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_actualizacion_id")
+    private Usuario usuarioActualizacion;
     /**
      * Usuario que se le asignó la incidencia para atenderla.
      */
-    @Column(name = "usuario_asignacion_id")
-    private Long usuarioAsignacionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_asignacion_id")
+    private Usuario usuarioAsignacion;
     /**
      * Usuario que se encuentra atendiendo la incidencia.
      */
-    @Column(name = "usuario_atencion_id")
-    private Long usuarioAtencionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_atencion_id")
+    private Usuario usuarioAtencion;
     /**
      * Usuario que resolvió la incidencia.
      */
-    @Column(name = "usuario_resolucion_id")
-    private Long usuarioResolucionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_resolucion_id")
+    private Usuario usuarioResolucion;
     /**
      * Usuario que revisó la incidencia.
      */
-    @Column(name = "usuario_revision_id")
-    private Long usuarioRevisionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_revision_id")
+    private Usuario usuarioRevision;
     /**
      * Usuario que cerró la incidencia.
      */
-    @Column(name = "usuario_cierre_id")
-    private Long usuarioCierreId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_cierre_id")
+    private Usuario usuarioCierre;
+
 }

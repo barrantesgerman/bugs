@@ -32,7 +32,7 @@ import models.Resolucion;
 @Value
 @EqualsAndHashCode(of = {"id"})
 @JsonRootName(value = "incidencia")
-public class IncidenciaViewDTO {
+public class IncidenciaDTO {
 
     /**
      * ID de la Incidencia.
@@ -90,5 +90,5 @@ public class IncidenciaViewDTO {
     /**
      * Usuario que actualizó por última vez la incidencia.
      */
-    private Long usuarioActualizacionId;
+    private String usuarioActualizacion;
 }
