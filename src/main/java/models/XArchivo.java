@@ -72,4 +72,11 @@ public class XArchivo extends ModeloBase implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    /**
+     * Contenido en bytes del archivo.
+     */
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "contenido")
+    private byte[] contenido;
 }
