@@ -18,7 +18,7 @@ package dao;
 import com.google.common.base.Optional;
 import java.util.List;
 import javax.inject.Inject;
-import models.EstadoProyecto;
+import models.enums.EstadoProyecto;
 import models.Categoria;
 import models.Proyecto;
 import ninja.NinjaRunner;

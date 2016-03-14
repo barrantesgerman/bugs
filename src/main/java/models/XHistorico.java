@@ -17,12 +17,10 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,7 +30,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Representa un archivo que forma parte de la evidencia de una incidencia.
+ * Representa el historial de cambios que sufre una incidencia en su ciclo de
+ * vida.
  *
  * @author Herman
  * @since 22/07/2015
@@ -41,34 +40,40 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
-@Table(name = "archivo")
-public class XArchivoUsuario extends ModeloBase implements Serializable {
+@Table(name = "historico")
+public class XHistorico extends ModeloBase implements Serializable {
 
     /**
-     * ID de la incidencia a la que esta relacionada el archivo.
+     * Incidencia a la que esta relacionada el histórico.
      */
-    @Column(name = "incidencia_id")
-    private long incidenciaId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incidencia_id")
+    private Incidencia incidencia;
     /**
-     * Usuario que subió el archivo.
+     * Usuario que realizó la acción.
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     /**
-     * Nombre del archivo.
+     * Campo afectado.
      */
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "campo")
+    private String campo;
     /**
-     * MimeType del archivo.
-     */
-    @Column(name = "mimeType")
-    private String mimeType;
-    /**
-     * Fecha en que fue subido el archivo.
+     * Fecha en la que se realizó la acción.
      */
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    /**
+     * Valor previo a realizar el cambio.
+     */
+    @Column(name = "antes")
+    private String antes;
+    /**
+     * Valor posterior a la realización del cambio.
+     */
+    @Column(name = "ahora")
+    private String ahora;
 }

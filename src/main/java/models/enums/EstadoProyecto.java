@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package models;
+package models.enums;
 
 /**
  * Representa cada uno de los estados en los que se puede encontrar un proyecto.

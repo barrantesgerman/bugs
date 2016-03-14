@@ -40,13 +40,14 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "nota")
-public class XNotaUsuario extends ModeloBase implements Serializable {
+public class XNota extends ModeloBase implements Serializable {
 
     /**
-     * ID de la incidencia a la que esta relacionada la nota.
+     * Incidencia a la que esta relacionada la nota.
      */
-    @Column(name = "incidencia_id")
-    private long incidenciaId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incidencia_id")
+    private Incidencia incidencia;
     /**
      * Usuario que creó la nota.
      */

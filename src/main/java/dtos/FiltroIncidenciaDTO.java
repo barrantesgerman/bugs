@@ -21,10 +21,10 @@ import java.io.Serializable;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import models.EstadoIncidencia;
-import models.Prioridad;
-import models.Reproducibilidad;
-import models.Resolucion;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 
 /**
  *

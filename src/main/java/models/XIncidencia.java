@@ -15,6 +15,10 @@
  */
 package models;
 
+import models.enums.Reproducibilidad;
+import models.enums.Prioridad;
+import models.enums.EstadoIncidencia;
+import models.enums.Resolucion;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,7 +46,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "incidencia")
-public class XIncidenciaCompleto extends ModeloBase implements Serializable {
+public class XIncidencia extends ModeloBase implements Serializable {
 
     /**
      * Proyecto a la que esta relacionada la incidencia.

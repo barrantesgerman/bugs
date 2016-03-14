@@ -19,10 +19,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import models.EstadoIncidencia;
-import models.Prioridad;
-import models.Reproducibilidad;
-import models.Resolucion;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 
 /**
  *

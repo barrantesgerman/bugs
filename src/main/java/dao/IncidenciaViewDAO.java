@@ -25,11 +25,11 @@ import dtos.PaginaDTO;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
-import models.EstadoIncidencia;
-import models.Prioridad;
-import models.QXIncidenciaCompleto;
-import models.Reproducibilidad;
-import models.Resolucion;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.QXIncidencia;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -43,7 +43,7 @@ public class IncidenciaViewDAO {
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
 
     private JPAQuery<IncidenciaDTO> filtrar(FiltroIncidenciaDTO filtro) {
-        QXIncidenciaCompleto qi = QXIncidenciaCompleto.xIncidenciaCompleto;
+        QXIncidencia qi = QXIncidencia.xIncidencia;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         JPAQuery<IncidenciaDTO> consulta = query
                 .select(

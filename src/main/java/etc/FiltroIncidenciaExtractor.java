@@ -20,10 +20,10 @@ import dtos.FiltroIncidenciaDTO;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import models.EstadoIncidencia;
-import models.Prioridad;
-import models.Reproducibilidad;
-import models.Resolucion;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 import ninja.Context;
 import ninja.params.ArgumentExtractor;
 

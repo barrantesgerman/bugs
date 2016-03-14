@@ -27,7 +27,7 @@ import javax.inject.Provider;
 import javax.persistence.EntityManager;
 import models.Archivo;
 import models.QArchivo;
-import models.QXArchivoUsuario;
+import models.QXArchivo;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -44,7 +44,7 @@ public class ArchivoDAO {
 
     @UnitOfWork
     public List<ArchivoDTO> listar(long incidenciaId) {
-        QXArchivoUsuario qa = QXArchivoUsuario.xArchivoUsuario;
+        QXArchivo qa = QXArchivo.xArchivo;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
                 .select(
@@ -57,7 +57,7 @@ public class ArchivoDAO {
                                 qa.fecha))
                 .from(qa)
                 .where(
-                        qa.incidenciaId.eq(incidenciaId),
+                        qa.incidencia.id.eq(incidenciaId),
                         qa.activo.isTrue())
                 .orderBy(qa.fecha.asc())
                 .fetch();
