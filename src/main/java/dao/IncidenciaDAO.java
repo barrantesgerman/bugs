@@ -17,13 +17,25 @@ package dao;
 
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import dtos.FiltroIncidenciaDTO;
+import dtos.IncidenciaDTO;
+import dtos.PaginaDTO;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.persistence.EntityManager;
 import models.Incidencia;
 import models.QIncidencia;
+import models.QXIncidencia;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 import ninja.jpa.UnitOfWork;
 
 /**
@@ -37,6 +49,96 @@ public class IncidenciaDAO {
     private Provider<JPAQueryFactory> jpaQueryFactoryProvider;
     @Inject
     private Provider<EntityManager> entitiyManagerProvider;
+
+    private JPAQuery<IncidenciaDTO> filtrar(FiltroIncidenciaDTO filtro) {
+        QXIncidencia qi = QXIncidencia.xIncidencia;
+        JPAQueryFactory query = jpaQueryFactoryProvider.get();
+        JPAQuery<IncidenciaDTO> consulta = query
+                .select(
+                        Projections.constructor(
+                                IncidenciaDTO.class,
+                                qi.id,
+                                qi.proyecto.id,
+                                qi.proyecto.nombre,
+                                qi.modulo.id,
+                                qi.modulo.nombre,
+                                qi.categoria.id,
+                                qi.categoria.descripcion,
+                                qi.estado,
+                                qi.prioridad,
+                                qi.reproducibilidad,
+                                qi.resolucion,
+                                qi.resumen,
+                                qi.fechaActualizacion,
+                                qi.usuarioActualizacion.usuario))
+                .from(qi)
+                .innerJoin(qi.proyecto)
+                .leftJoin(qi.modulo)
+                .innerJoin(qi.categoria)
+                .innerJoin(qi.usuarioActualizacion)
+                .where(qi.activo.isTrue());
+        if (filtro.getProyectoId().isPresent()) {
+            consulta.where(qi.proyecto.id.eq(filtro.getProyectoId().get()));
+        }
+        if (filtro.getModuloId().isPresent()) {
+            consulta.where(qi.modulo.id.eq(filtro.getModuloId().get()));
+        }
+        if (filtro.getCategoriaId().isPresent()) {
+            consulta.where(qi.categoria.id.eq(filtro.getCategoriaId().get()));
+        }
+        if (!filtro.getEstado().isEmpty()) {
+            BooleanBuilder builder = new BooleanBuilder();
+            for (EstadoIncidencia estado : filtro.getEstado()) {
+                builder.or(qi.estado.eq(estado));
+            }
+            consulta.where(builder);
+        }
+        if (!filtro.getPrioridad().isEmpty()) {
+            BooleanBuilder builder = new BooleanBuilder();
+            for (Prioridad prioridad : filtro.getPrioridad()) {
+                builder.or(qi.prioridad.eq(prioridad));
+            }
+            consulta.where(builder);
+        }
+        if (!filtro.getReproducibilidad().isEmpty()) {
+            BooleanBuilder builder = new BooleanBuilder();
+            for (Reproducibilidad reproducibilidad : filtro.getReproducibilidad()) {
+                builder.or(qi.reproducibilidad.eq(reproducibilidad));
+            }
+            consulta.where(builder);
+        }
+        if (!filtro.getResolucion().isEmpty()) {
+            BooleanBuilder builder = new BooleanBuilder();
+            for (Resolucion resolucion : filtro.getResolucion()) {
+                builder.or(qi.resolucion.eq(resolucion));
+            }
+            consulta.where(builder);
+        }
+        if (filtro.getResumen().isPresent()) {
+            consulta.where(qi.resumen.containsIgnoreCase(filtro.getResumen().get()));
+        }
+        return consulta;
+    }
+
+    @UnitOfWork
+    public long cantidad(FiltroIncidenciaDTO filtro) {
+
+        JPAQuery<IncidenciaDTO> consulta = filtrar(filtro);
+        return consulta.fetchCount();
+    }
+
+    @UnitOfWork
+    public List<IncidenciaDTO> listar(
+            FiltroIncidenciaDTO filtro,
+            PaginaDTO pagina) {
+
+        JPAQuery<IncidenciaDTO> consulta = filtrar(filtro);
+
+        consulta.limit(pagina.getTamano());
+        consulta.offset(pagina.getPagina());
+
+        return consulta.fetch();
+    }
 
     @UnitOfWork
     public Optional<Incidencia> buscar(long id) {

@@ -15,10 +15,6 @@
  */
 package models;
 
-import models.enums.Reproducibilidad;
-import models.enums.Prioridad;
-import models.enums.EstadoIncidencia;
-import models.enums.Resolucion;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -34,6 +30,10 @@ import javax.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import models.enums.EstadoIncidencia;
+import models.enums.Prioridad;
+import models.enums.Reproducibilidad;
+import models.enums.Resolucion;
 
 /**
  * Representa una incidencia.

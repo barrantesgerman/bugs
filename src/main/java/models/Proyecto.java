@@ -15,7 +15,6 @@
  */
 package models;
 
-import models.enums.EstadoProyecto;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +24,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import models.enums.EstadoProyecto;
 
 /**
  * Representa un proyecto de desarrollo.

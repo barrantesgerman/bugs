@@ -15,14 +15,12 @@
  */
 package filters;
 
+import com.google.inject.Inject;
 import ninja.Context;
 import ninja.Filter;
 import ninja.FilterChain;
 import ninja.Result;
-
 import org.slf4j.Logger;
-
-import com.google.inject.Inject;
 
 /**
  * This is just a demo for a filter. This filter just logs a request in level

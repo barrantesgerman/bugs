@@ -17,10 +17,10 @@ package controllers;
 
 import com.google.common.base.Optional;
 import dao.ModuloDAO;
+import dtos.Resultados;
 import java.util.List;
 import javax.inject.Inject;
 import models.Modulo;
-import dtos.Resultados;
 import ninja.Result;
 import ninja.params.PathParam;
 

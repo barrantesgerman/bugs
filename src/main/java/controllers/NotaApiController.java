@@ -17,9 +17,9 @@ package controllers;
 
 import com.google.common.base.Optional;
 import dao.NotaDAO;
+import dtos.Resultados;
 import java.util.List;
 import javax.inject.Inject;
-import dtos.Resultados;
 import models.Nota;
 import ninja.Result;
 import ninja.params.PathParam;

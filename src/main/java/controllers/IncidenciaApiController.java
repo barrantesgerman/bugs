@@ -17,17 +17,16 @@ package controllers;
 
 import com.google.common.base.Optional;
 import dao.IncidenciaDAO;
-import dao.IncidenciaViewDAO;
 import dtos.FiltroIncidenciaDTO;
 import dtos.IncidenciaDTO;
 import dtos.PaginaDTO;
-import java.util.List;
-import javax.inject.Inject;
-import models.Incidencia;
 import dtos.Resultados;
 import etc.FiltroIncidencia;
 import etc.Pagina;
 import etc.UsuarioId;
+import java.util.List;
+import javax.inject.Inject;
+import models.Incidencia;
 import ninja.Result;
 import ninja.params.PathParam;
 
@@ -41,16 +40,13 @@ public class IncidenciaApiController {
     @Inject
     private IncidenciaDAO incidenciaDAO;
 
-    @Inject
-    private IncidenciaViewDAO incidenciaViewDAO;
-
     public Result listar(
             @FiltroIncidencia FiltroIncidenciaDTO filtro,
             @Pagina PaginaDTO pagina) {
 
         List<IncidenciaDTO> incidencias
-                = incidenciaViewDAO.listar(filtro, pagina);
-        Long total = incidenciaViewDAO.cantidad(filtro);
+                = incidenciaDAO.listar(filtro, pagina);
+        Long total = incidenciaDAO.cantidad(filtro);
         pagina.setCantidad(incidencias.size());
         pagina.setTotal(total.intValue());
 

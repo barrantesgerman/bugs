@@ -15,20 +15,20 @@
  */
 package conf;
 
-import ninja.AssetsController;
-import ninja.Router;
-import ninja.application.ApplicationRoutes;
-import ninja.utils.NinjaProperties;
 import com.google.inject.Inject;
-import controllers.InicioController;
 import controllers.ArchivoApiController;
 import controllers.CatalogoApiController;
 import controllers.CategoriaApiController;
 import controllers.IncidenciaApiController;
+import controllers.InicioController;
 import controllers.LoginLogoutController;
 import controllers.ModuloApiController;
 import controllers.NotaApiController;
 import controllers.ProyectoApiController;
+import ninja.AssetsController;
+import ninja.Router;
+import ninja.application.ApplicationRoutes;
+import ninja.utils.NinjaProperties;
 
 public class Routes implements ApplicationRoutes {
 
