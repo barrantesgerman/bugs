@@ -16,6 +16,8 @@
 package dao;
 
 import com.google.common.base.Optional;
+import conf.DozerMapper;
+import dtos.IncidenciaDTO;
 import javax.inject.Inject;
 import models.Categoria;
 import models.Incidencia;
@@ -30,6 +32,7 @@ import ninja.NinjaRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -57,11 +60,14 @@ public class IncidenciaDAOTest {
     @Inject
     private CategoriaDAO categoriaDAO;
 
+    @Inject
+    private DozerMapper mapper;
+
     private static long proyectoId;
     private static long moduloId;
     private static long categoriaId;
     private static long incidenciaId;
-    private static long usuarioId = 1L;
+    private static Long usuarioId = 1L;
 
     @Test
     public void test0setup() {
@@ -102,10 +108,10 @@ public class IncidenciaDAOTest {
         Optional<Incidencia> creado = incidenciaDAO.crear(usuarioId, incidencia);
 
         assertTrue(creado.isPresent());
-        
+
         assertNotEquals(creado.get().getId(), 0L);
         incidenciaId = creado.get().getId();
-        
+
         assertEquals(creado.get().getProyectoId(), proyectoId);
         assertEquals(creado.get().getModuloId(), moduloId);
         assertEquals(creado.get().getCategoriaId(), categoriaId);
@@ -115,14 +121,14 @@ public class IncidenciaDAOTest {
         assertEquals(creado.get().getResolucion(), Resolucion.ABIERTA);
         assertEquals(creado.get().getResumen(), "Incidencia Prueba 1");
         assertEquals(creado.get().getDescripcion(), "Descripción Incidencia Prueba 1");
-//        assertEquals(creado.get().getUsuarioCreacionId(), usuarioId);
-//        assertEquals(creado.get().getUsuarioActualizacionId(), usuarioId);
+        assertEquals(creado.get().getUsuarioCreacionId(), usuarioId);
+        assertEquals(creado.get().getUsuarioActualizacionId(), usuarioId);
     }
 
     @Test
     public void test2Buscar() {
         System.out.println("*** test2Buscar ***");
-        Optional<Incidencia> buscado = incidenciaDAO.buscar(incidenciaId);
+        Optional<IncidenciaDTO> buscado = incidenciaDAO.buscar(incidenciaId);
 
         assertTrue(buscado.isPresent());
         assertEquals(buscado.get().getId(), incidenciaId);
@@ -135,14 +141,15 @@ public class IncidenciaDAOTest {
         assertEquals(buscado.get().getResolucion(), Resolucion.ABIERTA);
         assertEquals(buscado.get().getResumen(), "Incidencia Prueba 1");
         assertEquals(buscado.get().getDescripcion(), "Descripción Incidencia Prueba 1");
-//        assertEquals(buscado.get().getUsuarioCreacionId(), usuarioId);
-//        assertEquals(buscado.get().getUsuarioActualizacionId(), usuarioId);
+        assertNotNull(buscado.get().getUsuarioCreacion());
+        assertNotNull(buscado.get().getUsuarioActualizacion());
     }
 
     @Test
     public void test3Editar() {
         System.out.println("*** test3Editar ***");
-        Incidencia buscado = incidenciaDAO.buscar(incidenciaId).get();
+        IncidenciaDTO buscadoDTO = incidenciaDAO.buscar(incidenciaId).get();
+        Incidencia buscado = mapper.map(buscadoDTO, Incidencia.class);
         buscado.setEstado(EstadoIncidencia.ACEPTADA);
         buscado.setPrioridad(Prioridad.ALTA);
         buscado.setReproducibilidad(Reproducibilidad.ALEATORIO);
@@ -153,14 +160,15 @@ public class IncidenciaDAOTest {
         boolean editado = incidenciaDAO.editar(buscado.getId(), usuarioId, buscado);
         assertTrue(editado);
 
-        buscado = incidenciaDAO.buscar(1L).get();
+        buscadoDTO = incidenciaDAO.buscar(1L).get();
+        buscado = mapper.map(buscadoDTO, Incidencia.class);
         assertEquals(buscado.getEstado(), EstadoIncidencia.ACEPTADA);
         assertEquals(buscado.getPrioridad(), Prioridad.ALTA);
         assertEquals(buscado.getReproducibilidad(), Reproducibilidad.ALEATORIO);
         assertEquals(buscado.getResolucion(), Resolucion.NO_REPRODUCIBLE);
         assertEquals(buscado.getResumen(), "Incidencia 1");
         assertEquals(buscado.getDescripcion(), "Descripción Incidencia 1");
-//        assertEquals(buscado.getUsuarioActualizacionId(), usuarioId);
+        assertNotNull(buscadoDTO.getUsuarioActualizacion());
     }
 
     @Test
@@ -168,7 +176,7 @@ public class IncidenciaDAOTest {
         System.out.println("*** test4Eliminar ***");
         boolean eliminado = incidenciaDAO.eliminar(incidenciaId);
         assertTrue(eliminado);
-        Optional<Incidencia> buscado = incidenciaDAO.buscar(incidenciaId);
+        Optional<IncidenciaDTO> buscado = incidenciaDAO.buscar(incidenciaId);
         assertFalse(buscado.isPresent());
     }
 }

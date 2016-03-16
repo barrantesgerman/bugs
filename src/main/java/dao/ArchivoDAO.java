@@ -17,9 +17,9 @@ package dao;
 
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.ArchivoDTO;
+import dtos.QArchivoDTO;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -48,8 +48,7 @@ public class ArchivoDAO {
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return query
                 .select(
-                        Projections.constructor(
-                                ArchivoDTO.class,
+                        new QArchivoDTO(
                                 qa.id,
                                 qa.usuario.usuario,
                                 qa.nombre,

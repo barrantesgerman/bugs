@@ -72,12 +72,13 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/proyectos/{proyectoId: [0-9]+}/modulos").with(ModuloApiController.class, "crear");
         router.PUT().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "editar");
         router.DELETE().route("/api/proyectos/{proyectoId: [0-9]+}/modulos/{moduloId: [0-9]+}").with(ModuloApiController.class, "eliminar");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Incidencia API Controller
         ///////////////////////////////////////////////////////////////////////
         router.GET().route("/api/incidencias").with(IncidenciaApiController.class, "listar");
-        
+        router.GET().route("/api/incidencias/{id: [0-9]+}").with(IncidenciaApiController.class, "buscar");
+
         ///////////////////////////////////////////////////////////////////////
         // Catálogo API Controller
         ///////////////////////////////////////////////////////////////////////
@@ -86,7 +87,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/catalogos/prioridad").with(CatalogoApiController.class, "prioridad");
         router.GET().route("/api/catalogos/reproducibilidad").with(CatalogoApiController.class, "reproducibilidad");
         router.GET().route("/api/catalogos/resolucion").with(CatalogoApiController.class, "resolucion");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Nota API Controller
         ///////////////////////////////////////////////////////////////////////
@@ -95,7 +96,7 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/notas").with(NotaApiController.class, "crear");
         router.PUT().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "editar");
         router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/notas/{notaId: [0-9]+}").with(NotaApiController.class, "eliminar");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Archivo API Controller
         ///////////////////////////////////////////////////////////////////////
@@ -103,7 +104,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{modo: inline|attachment}/{archivoId: [0-9]+}").with(ArchivoApiController.class, "buscar");
         router.POST().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos").with(ArchivoApiController.class, "crear");
         router.DELETE().route("/api/incidencias/{incidenciaId: [0-9]+}/archivos/{archivoId: [0-9]+}").with(ArchivoApiController.class, "eliminar");
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Login / Logout
         ///////////////////////////////////////////////////////////////////////

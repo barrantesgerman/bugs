@@ -58,7 +58,7 @@ public class IncidenciaApiController {
 
     public Result buscar(@PathParam("id") Long id) {
 
-        Optional<Incidencia> incidencia = incidenciaDAO.buscar(id);
+        Optional<IncidenciaDTO> incidencia = incidenciaDAO.buscar(id);
         if (incidencia.isPresent()) {
             return Resultados.ok(incidencia.get());
         }

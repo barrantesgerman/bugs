@@ -18,12 +18,12 @@ package dao;
 import com.google.common.base.Optional;
 import com.google.inject.persist.Transactional;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dtos.FiltroIncidenciaDTO;
 import dtos.IncidenciaDTO;
 import dtos.PaginaDTO;
+import dtos.QIncidenciaDTO;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -55,8 +55,7 @@ public class IncidenciaDAO {
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         JPAQuery<IncidenciaDTO> consulta = query
                 .select(
-                        Projections.constructor(
-                                IncidenciaDTO.class,
+                        new QIncidenciaDTO(
                                 qi.id,
                                 qi.proyecto.id,
                                 qi.proyecto.nombre,
@@ -141,11 +140,52 @@ public class IncidenciaDAO {
     }
 
     @UnitOfWork
-    public Optional<Incidencia> buscar(long id) {
-        QIncidencia qi = QIncidencia.incidencia;
+    public Optional<IncidenciaDTO> buscar(long id) {
+        QXIncidencia qi = QXIncidencia.xIncidencia;
         JPAQueryFactory query = jpaQueryFactoryProvider.get();
         return Optional.fromNullable(query
-                .selectFrom(qi)
+                .select(
+                        new QIncidenciaDTO(
+                                qi.id,
+                                qi.proyecto.id,
+                                qi.proyecto.nombre,
+                                qi.modulo.id,
+                                qi.modulo.nombre,
+                                qi.categoria.id,
+                                qi.categoria.descripcion,
+                                qi.estado,
+                                qi.prioridad,
+                                qi.reproducibilidad,
+                                qi.resolucion,
+                                qi.resumen,
+                                qi.fechaActualizacion,
+                                qi.usuarioActualizacion.usuario,
+                                qi.descripcion,
+                                qi.pasos,
+                                qi.informacionAdicional,
+                                qi.fechaCreacion,
+                                qi.usuarioCreacion.usuario,
+                                qi.fechaAsignacion,
+                                qi.usuarioAsignacion.usuario,
+                                qi.fechaAtencion,
+                                qi.usuarioAtencion.usuario,
+                                qi.fechaResolucion,
+                                qi.usuarioResolucion.usuario,
+                                qi.fechaRevision,
+                                qi.usuarioRevision.usuario,
+                                qi.fechaCierre,
+                                qi.usuarioCierre.usuario))
+                .from(qi)
+                .innerJoin(qi.proyecto)
+                .leftJoin(qi.modulo)
+                .innerJoin(qi.categoria)
+                .innerJoin(qi.usuarioActualizacion)
+                .leftJoin(qi.usuarioCreacion)
+                .leftJoin(qi.usuarioAsignacion)
+                .leftJoin(qi.usuarioAtencion)
+                .leftJoin(qi.usuarioResolucion)
+                .leftJoin(qi.usuarioRevision)
+                .leftJoin(qi.usuarioCierre)
                 .where(
                         qi.id.eq(id),
                         qi.activo.isTrue())

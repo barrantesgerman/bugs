@@ -16,12 +16,13 @@
 package dtos;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.querydsl.core.annotations.QueryProjection;
 import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 /**
- * Representa un archivo liviano (sin el arreglo de bytes).
+ * Representa un Archivo liviano (sin el arreglo de bytes).
  *
  * @author Herman Barrantes
  * @since 06/08/2015
@@ -51,5 +52,23 @@ public class ArchivoDTO {
      * Fecha en que fue subido el archivo.
      */
     private final Date fecha;
+
+    /**
+     * Constructor de ArchivoDTO.
+     *
+     * @param id ID del archivo.
+     * @param usuario Nombre del Usuario que subió el archivo.
+     * @param nombre Nombre del archivo.
+     * @param mimeType MimeType del archivo.
+     * @param fecha Fecha en que fue subido el archivo.
+     */
+    @QueryProjection
+    public ArchivoDTO(long id, String usuario, String nombre, String mimeType, Date fecha) {
+        this.id = id;
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.mimeType = mimeType;
+        this.fecha = fecha;
+    }
 
 }
